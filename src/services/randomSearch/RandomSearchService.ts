@@ -69,7 +69,6 @@ const getRound = (
     allInputs: accumulator,
     roundID
   };
-  console.log(winner);
   return winner;
 };
 

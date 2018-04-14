@@ -19,7 +19,6 @@ const RandomSearchSchwefel: React.SFC = () => {
       return { x: i, y: e.costValue };
     })
   );
-  console.log(stats);
 
   return (
     <>
@@ -50,7 +49,6 @@ const RandomSearchSchwefel: React.SFC = () => {
               <Table.Row>
                 <Table.HeaderCell>Round</Table.HeaderCell>
                 <Table.HeaderCell>x</Table.HeaderCell>
-                <Table.HeaderCell>i</Table.HeaderCell>
                 <Table.HeaderCell>Cost value</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -65,7 +63,6 @@ const RandomSearchSchwefel: React.SFC = () => {
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
                     <Table.Cell>{x.winningInput.xi.toFixed(10)}</Table.Cell>
-                    <Table.Cell>{x.winningInput.iterations}</Table.Cell>
                     <Table.Cell>
                       {x.winningInput.costValue.toFixed(10)}
                     </Table.Cell>
@@ -116,8 +113,9 @@ const RandomSearchSchwefel: React.SFC = () => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number; x: number }) =>
-                    `iteration:${d.x} average: ${d.y.toFixed(10)}`}
+                  labels={(d: { y: number; x: number }) => {
+                    return `iteration:${d.x} average: ${d.y.toFixed(10)}`;
+                  }}
                   labelComponent={
                     <VictoryTooltip
                       cornerRadius={0}

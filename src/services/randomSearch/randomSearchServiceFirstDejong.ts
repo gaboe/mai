@@ -13,6 +13,11 @@ type RoundWinner = {
   allInputs: DejongInput[];
 };
 
+type ConvergenceStat = {
+  iteration: number;
+  costValue: number;
+};
+
 const evaluateDejongFunction = (iterations: number, x: number) => {
   return Array.from({ length: iterations })
     .map(_ => Math.pow(x, 2))
@@ -60,9 +65,23 @@ type DejongStat = {
   min: number,
   max: number,
   average: number;
+  convergence: ConvergenceStat[];
 };
 
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+const getConvergenceStat = (rounds: RoundWinner[]) => {
+  let convergence: ConvergenceStat[] = [];
+  for (let index = 0; index < 999; index++) {
+    const costsAtTime = rounds.map(x => x.allInputs[index].costValue);
+    const c: ConvergenceStat = {
+      iteration: index,
+      costValue: arrAvg(costsAtTime)
+    };
+    convergence = append(c, convergence);
+  }
+  return convergence;
+};
 
 const getDejongStats = () => {
   const winners = getDejongRoundWinners();
@@ -70,7 +89,8 @@ const getDejongStats = () => {
   const min = Math.min(...costValues);
   const max = Math.max(...costValues);
   const average = arrAvg(costValues);
-  const stat: DejongStat = { winners, min, max, average };
+  const convergence = getConvergenceStat(winners);
+  const stat: DejongStat = { winners, min, max, average, convergence };
   return stat;
 };
 

@@ -1,4 +1,4 @@
-import { randomInt, random, } from "mathjs";
+import { randomInt, random, std } from "mathjs";
 import { append } from "ramda";
 type DejongInput = {
   id: number;
@@ -67,6 +67,7 @@ type DejongStat = {
   average: number;
   median: number;
   convergence: ConvergenceStat[];
+  standardDeviation: number;
 };
 
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -107,7 +108,8 @@ const getDejongStats = () => {
   const average = arrAvg(costValues);
   const convergence = getConvergenceStat(winners);
   const median = getMedian(costValues);
-  const stat: DejongStat = { winners, min, max, average, convergence, median };
+  const standardDeviation = std(costValues);
+  const stat: DejongStat = { winners, min, max, average, convergence, median, standardDeviation };
   return stat;
 };
 

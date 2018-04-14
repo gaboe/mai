@@ -37,6 +37,9 @@ const RandomSearch: React.SFC = () => {
         <Header as="h4">Median: {stats.median.toFixed(10)}</Header>
       </Row>
       <Row>
+        <Header as="h4">Standard deviation: {stats.standardDeviation.toFixed(10)}</Header>
+      </Row>
+      <Row>
         <Col lg={6}>
           <Table celled={true}>
             <Table.Header>

@@ -23,7 +23,7 @@ type ConvergenceStat = {
   costValue: number;
 };
 
-type DejongStat = {
+type Stat = {
   winners: RoundWinner[];
   min: number;
   max: number;
@@ -123,7 +123,7 @@ const getStats = (costFn: () => GeneratedValues) => {
   const convergence = getConvergenceStat(winners);
   const median = getMedian(costValues);
   const standardDeviation = std(costValues);
-  const stat: DejongStat = {
+  const stat: Stat = {
     winners,
     min,
     max,
@@ -176,4 +176,4 @@ const getSchwefelStats = () => {
   });
 };
 
-export { getFirstDejongStats, getSecondDejongStats, getSchwefelStats };
+export { getFirstDejongStats, getSecondDejongStats, getSchwefelStats, Stat };

@@ -1,5 +1,5 @@
 import { randomInt, random } from "mathjs";
-
+import { append } from "ramda";
 type DejongInput = {
   id: number;
   iterations: number;
@@ -8,8 +8,9 @@ type DejongInput = {
 };
 
 type RoundWinner = {
-  input: DejongInput;
+  winningInput: DejongInput;
   roundID: number;
+  allInputs: DejongInput[];
 };
 
 const evaluateDejongFunction = (iterations: number, x: number) => {
@@ -18,18 +19,30 @@ const evaluateDejongFunction = (iterations: number, x: number) => {
     .reduce((a, b) => a + b);
 };
 
-const getDejongRoundWinner = () => {
-  const winner: DejongInput = Array
+const getDejongRoundWinner = (roundID: number) => {
+  const inputs: DejongInput[] = Array
     .from({ length: 1000 })
     .map((_, i) => i)
     .map(e => {
-      const iterations = randomInt(1, 100);
+      const iterations = randomInt(1, 10);
       const randomX = random(-5, 5);
       const costValue = evaluateDejongFunction(iterations, randomX);
       return { id: e, iterations: iterations, xi: randomX, costValue: costValue };
-    })
-    .sort((a, b) => (a.costValue - b.costValue))
-  [0];
+    });
+
+  let accumulator: DejongInput[] = [];
+  inputs.forEach(element => {
+    if (accumulator.length === 0 || accumulator[accumulator.length - 1].costValue > element.costValue) {
+      accumulator = append(element, accumulator);
+    } else {
+      accumulator = append(accumulator[accumulator.length - 1], accumulator);
+    }
+  });
+  const winner: RoundWinner = {
+    winningInput: accumulator[accumulator.length - 1],
+    allInputs: accumulator,
+    roundID,
+  };
   return winner;
 };
 
@@ -37,13 +50,7 @@ const getDejongRoundWinners = () => {
   const winners: RoundWinner[] = Array
     .from({ length: 30 })
     .map((_, i) => i)
-    .map(e => {
-      const winner: RoundWinner = {
-        roundID: e,
-        input: getDejongRoundWinner(),
-      };
-      return winner;
-    });
+    .map(e => getDejongRoundWinner(e));
 
   return winners;
 };
@@ -59,7 +66,7 @@ const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getDejongStats = () => {
   const winners = getDejongRoundWinners();
-  const costValues = [...winners.map(x => x.input.costValue)];
+  const costValues = [...winners.map(x => x.winningInput.costValue)];
   const min = Math.min(...costValues);
   const max = Math.max(...costValues);
   const average = arrAvg(costValues);

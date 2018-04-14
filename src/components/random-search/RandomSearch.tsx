@@ -2,7 +2,9 @@ import * as React from "react";
 import { Header, Table } from "semantic-ui-react";
 import { Row, Col } from "react-grid-system";
 import { getDejongStats } from "../../services/randomSearch/randomSearchServiceFirstDejong";
-import { VictoryChart, VictoryLine, VictoryTheme, VictoryContainer } from "victory";
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryTooltip, } from "victory";
+
+import { VictoryVoronoiContainer } from "victory-chart";
 
 const getRandomColor = () => {
   // tslint:disable-next-line:no-bitwise
@@ -86,7 +88,14 @@ const RandomSearch: React.SFC = () => {
         <Col lg={6}>
           <VictoryChart
             theme={VictoryTheme.material}
-            containerComponent={<VictoryContainer style={{ width: "70%", height: "auto" }} />}
+            containerComponent={
+              <VictoryVoronoiContainer
+                style={{ width: "70%", height: "auto" }}
+                voronoiDimension="x"
+                labels={(d: { y: number, x: number }) => `iteration:${d.x} y: ${d.y}`}
+                labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
+              />
+            }
           >
             {graphData.map((x, i) => {
               return (
@@ -100,7 +109,6 @@ const RandomSearch: React.SFC = () => {
                 />
               );
             })}
-
           </VictoryChart>
         </Col>
 

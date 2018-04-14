@@ -1,5 +1,5 @@
-import { evaluatedSchwefelFunction } from "../services/Functions";
-import { getSchwefelStats } from "../services/randomSearch/RandomSearchService";
+import { evaluatedSchwefelFunction } from "../../services/Functions";
+import { getSchwefelStats } from "../../services/randomSearch/RandomSearchService";
 
 it("is almost zero", () => {
   const val = evaluatedSchwefelFunction(420.9687);
@@ -34,8 +34,10 @@ it("is never undefined", () => {
     x.forEach(e => {
       expect(e.costValue).not.toBeNaN();
       expect(e.id).toBeGreaterThanOrEqual(0);
-      expect(e.xi).toBeGreaterThanOrEqual(-500);
-      expect(e.xi).toBeLessThanOrEqual(500);
+      e.inputs.forEach(i => {
+        expect(i).toBeGreaterThanOrEqual(-500);
+        expect(i).toBeLessThanOrEqual(500);
+      });
     })
   );
 });

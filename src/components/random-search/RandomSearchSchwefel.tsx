@@ -62,7 +62,9 @@ const RandomSearchSchwefel: React.SFC = () => {
                     key={x.roundID}
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
-                    <Table.Cell>{x.winningInput.xi.toFixed(10)}</Table.Cell>
+                    <Table.Cell>
+                      {x.winningInput.inputs[0].toFixed(10)}
+                    </Table.Cell>
                     <Table.Cell>
                       {x.winningInput.costValue.toFixed(10)}
                     </Table.Cell>

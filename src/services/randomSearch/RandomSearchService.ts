@@ -8,7 +8,7 @@ import {
 type DejongInput = {
   id: number;
   iterations: number;
-  xi: number;
+  inputs: number[];
   costValue: number;
 };
 
@@ -33,23 +33,25 @@ type DejongStat = {
   standardDeviation: number;
 };
 
-const getRound = (
-  roundID: number,
-  costFn: (iterations: number, value: number) => number,
-  randMin: number,
-  randMax: number
-) => {
+type GeneratedValues = {
+  input: number[];
+  output: number;
+  /**
+   * Dimension or iteration
+   */
+  iterations: number;
+};
+
+const getRound = (roundID: number, costFn: () => GeneratedValues) => {
   const inputs: DejongInput[] = Array.from({ length: 1000 })
     .map((_, i) => i)
     .map(e => {
-      const iterations = randomInt(1, 10);
-      const randomX = random(randMin, randMax);
-      const costValue = costFn(randomX, iterations);
+      const costValue = costFn();
       return {
         id: e,
-        iterations: iterations,
-        xi: randomX,
-        costValue: costValue
+        iterations: costValue.iterations,
+        inputs: costValue.input,
+        costValue: costValue.output
       };
     });
 
@@ -72,14 +74,10 @@ const getRound = (
   return winner;
 };
 
-const getRounds = (
-  costFn: (iterations: number, value: number) => number,
-  randMin: number,
-  randMax: number
-) => {
+const getRounds = (costFn: () => GeneratedValues) => {
   const winners: RoundWinner[] = Array.from({ length: 30 })
     .map((_, i) => i)
-    .map(e => getRound(e, costFn, randMin, randMax));
+    .map(e => getRound(e, costFn));
 
   return winners;
 };
@@ -116,12 +114,8 @@ const getMedian = (values: number[]) => {
   }
 };
 
-const getStats = (
-  costFn: (iterations: number, value: number) => number,
-  randMin: number,
-  randMax: number
-) => {
-  const winners = getRounds(costFn, randMin, randMax);
+const getStats = (costFn: () => GeneratedValues) => {
+  const winners = getRounds(costFn);
   const costValues = [...winners.map(x => x.winningInput.costValue)];
   const min = Math.min(...costValues);
   const max = Math.max(...costValues);
@@ -142,15 +136,44 @@ const getStats = (
 };
 
 const getFirstDejongStats = () => {
-  return getStats(evaluateFirstDejongFunction, -5, 5);
+  return getStats(() => {
+    const iterations = randomInt(1, 10);
+    const x = random(-5, 5);
+    const o = evaluateFirstDejongFunction(x, iterations);
+    const values: GeneratedValues = {
+      input: [x],
+      iterations,
+      output: o
+    };
+    return values;
+  });
 };
 
 const getSecondDejongStats = () => {
-  return getStats(evaluateSecondDejongFunction, -2, 2);
+  return getStats(() => {
+    const iterations = randomInt(2, 10);
+    const x = random(-2, 2);
+    const o = evaluateSecondDejongFunction(x, iterations);
+    const values: GeneratedValues = {
+      input: [x],
+      iterations,
+      output: o
+    };
+    return values;
+  });
 };
 
 const getSchwefelStats = () => {
-  return getStats(evaluatedSchwefelFunction, -500, 500);
+  return getStats(() => {
+    const x = random(-500, 500);
+    const o = evaluatedSchwefelFunction(x, 2);
+    const values: GeneratedValues = {
+      input: [x],
+      iterations: 2,
+      output: o
+    };
+    return values;
+  });
 };
 
 export { getFirstDejongStats, getSecondDejongStats, getSchwefelStats };

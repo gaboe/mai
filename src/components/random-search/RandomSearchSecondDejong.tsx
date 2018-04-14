@@ -63,7 +63,9 @@ const RandomSearchSecondDejong: React.SFC = () => {
                     key={x.roundID}
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
-                    <Table.Cell>{x.winningInput.xi.toFixed(10)}</Table.Cell>
+                    <Table.Cell>
+                      {x.winningInput.inputs[0].toFixed(10)}
+                    </Table.Cell>
                     <Table.Cell>{x.winningInput.iterations}</Table.Cell>
                     <Table.Cell>
                       {x.winningInput.costValue.toFixed(10)}
@@ -82,8 +84,9 @@ const RandomSearchSecondDejong: React.SFC = () => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number; x: number }) =>
-                    `iteration:${d.x} y: ${d.y.toFixed(10)}`}
+                  labels={(d: { y: number; x: number }) => {
+                    return `iteration:${d.x} y: ${d.y.toFixed(10)}`;
+                  }}
                   labelComponent={
                     <VictoryTooltip
                       cornerRadius={0}
@@ -114,8 +117,9 @@ const RandomSearchSecondDejong: React.SFC = () => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number; x: number }) =>
-                    `iteration:${d.x} average: ${d.y.toFixed(10)}`}
+                  labels={(d: { y: number; x: number }) => {
+                    return `iteration:${d.x} y: ${d.y.toFixed(10)}`;
+                  }}
                   labelComponent={
                     <VictoryTooltip
                       cornerRadius={0}

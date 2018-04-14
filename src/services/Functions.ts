@@ -7,7 +7,7 @@ const evaluateFirstDejongFunction = (x: number, iterations: number) => {
 };
 
 const evaluateSecondDejongFunction = (x: number, iterations: number) => {
-  const xiPlusOne = x === 2.048 ? 2.048 : x + 0.1;
+  const xiPlusOne = x === 2.048 ? 2.048 : x + 0.0001;
 
   return Array.from({ length: iterations - 1 })
     .map(
@@ -16,8 +16,7 @@ const evaluateSecondDejongFunction = (x: number, iterations: number) => {
     .reduce((a, b) => a + b);
 };
 
-const evaluatedSchwefelFunction = (x: number) => {
-  const dimensions = 2;
+const evaluatedSchwefelFunction = (x: number, dimensions: number = 2) => {
   const sum = Array.from({ length: dimensions })
     .map(_ => x * sin(sqrt(abs(x))))
     .reduce((a, b) => a + b);

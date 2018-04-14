@@ -19,8 +19,6 @@ const RandomSearch: React.SFC = () => {
       .sort((a, b) => b.costValue - a.costValue)
       .map((e, i) => { return { x: i, y: e.costValue }; }));
 
-  console.log(graphData);
-
   return (
     <>
       <Row>
@@ -33,7 +31,10 @@ const RandomSearch: React.SFC = () => {
         <Header as="h4">Max: {stats.max.toFixed(10)}</Header>
       </Row>
       <Row>
-        <Header as="h4">Average: {stats.average.toFixed(10)}</Header>
+        <Header as="h4">Mean: {stats.average.toFixed(10)}</Header>
+      </Row>
+      <Row>
+        <Header as="h4">Median: {stats.median.toFixed(10)}</Header>
       </Row>
       <Row>
         <Col lg={6}>

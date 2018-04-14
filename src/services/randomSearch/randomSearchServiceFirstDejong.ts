@@ -1,4 +1,4 @@
-import { randomInt, random } from "mathjs";
+import { randomInt, random, } from "mathjs";
 import { append } from "ramda";
 type DejongInput = {
   id: number;
@@ -65,6 +65,7 @@ type DejongStat = {
   min: number,
   max: number,
   average: number;
+  median: number;
   convergence: ConvergenceStat[];
 };
 
@@ -83,6 +84,21 @@ const getConvergenceStat = (rounds: RoundWinner[]) => {
   return convergence;
 };
 
+const getMedian = (values: number[]) => {
+  values.sort(function (a: number, b: number) {
+    return a - b;
+  });
+
+  if (values.length === 0) { return 0; }
+
+  var half = Math.floor(values.length / 2);
+  if (values.length % 2 === 0) {
+    return values[half];
+  } else {
+    return (values[half - 1] + values[half]) / 2.0;
+  }
+};
+
 const getDejongStats = () => {
   const winners = getDejongRoundWinners();
   const costValues = [...winners.map(x => x.winningInput.costValue)];
@@ -90,7 +106,8 @@ const getDejongStats = () => {
   const max = Math.max(...costValues);
   const average = arrAvg(costValues);
   const convergence = getConvergenceStat(winners);
-  const stat: DejongStat = { winners, min, max, average, convergence };
+  const median = getMedian(costValues);
+  const stat: DejongStat = { winners, min, max, average, convergence, median };
   return stat;
 };
 

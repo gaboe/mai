@@ -1,18 +1,14 @@
 import * as React from "react";
 import { Header, Table } from "semantic-ui-react";
 import { Row, Col } from "react-grid-system";
-import { getDejongStats } from "../../services/randomSearch/randomSearchServiceFirstDejong";
+import { getFirstDejongStats } from "../../services/randomSearch/randomSearchServiceFirstDejong";
 import { VictoryChart, VictoryLine, VictoryTheme, VictoryTooltip, } from "victory";
 
 import { VictoryVoronoiContainer } from "victory-chart";
+import { getRandomColor } from "../../services/colorService";
 
-const getRandomColor = () => {
-  // tslint:disable-next-line:no-bitwise
-  return `${"#" + ((1 << 24) * Math.random() | 0).toString(16)}`;
-};
-
-const RandomSearch: React.SFC = () => {
-  const stats = getDejongStats();
+const RandomSearchSecondDejong: React.SFC = () => {
+  const stats = getFirstDejongStats();
   const graphData = stats
     .winners.map((x) => x
       .allInputs
@@ -22,7 +18,7 @@ const RandomSearch: React.SFC = () => {
   return (
     <>
       <Row>
-        <Header as="h1">De Jong First Function</Header>
+        <Header as="h1">De Jong Second Function</Header>
       </Row>
       <Row>
         <Header as="h4">Min: {stats.min.toFixed(10)}</Header>
@@ -130,4 +126,4 @@ const RandomSearch: React.SFC = () => {
   );
 };
 
-export { RandomSearch };
+export { RandomSearchSecondDejong };

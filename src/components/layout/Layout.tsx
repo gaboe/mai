@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Container, Menu, } from "semantic-ui-react";
+import { Container, Menu, Dropdown } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 type Props = { children: React.ReactNode };
 
@@ -15,6 +15,21 @@ const Layout: React.SFC<Props> = (props: Props) => (
                         Random Search
                     </Link>
                 </Menu.Item>
+                <Dropdown item={true} simple={true} text="Random Search">
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            <Link to="/" style={{ color: "black" }}>
+                                De Jong First Function
+                            </Link>
+
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Link to="/random-search-dejong-second" style={{ color: "black" }}>
+                                De Jong Second Function
+                            </Link>
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </Container>
         </Menu>
 

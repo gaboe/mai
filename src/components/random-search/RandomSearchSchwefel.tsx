@@ -1,19 +1,24 @@
 import * as React from "react";
 import { Header, Table } from "semantic-ui-react";
 import { Row, Col } from "react-grid-system";
-import { getSchwefelStats } from "../../services/randomSearch/randomSearchServiceFirstDejong";
-import { VictoryChart, VictoryLine, VictoryTheme, VictoryTooltip, } from "victory";
+import { getSchwefelStats } from "../../services/randomSearch/RandomSearchService";
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryTheme,
+  VictoryTooltip
+} from "victory";
 
 import { VictoryVoronoiContainer } from "victory-chart";
-import { getRandomColor } from "../../services/colorService";
+import { getRandomColor } from "../../services/ColorService";
 
 const RandomSearchSchwefel: React.SFC = () => {
   const stats = getSchwefelStats();
-  const graphData = stats
-    .winners.map((x) => x
-      .allInputs
-      .sort((a, b) => b.costValue - a.costValue)
-      .map((e, i) => { return { x: i, y: e.costValue }; }));
+  const graphData = stats.winners.map(x =>
+    x.allInputs.sort((a, b) => b.costValue - a.costValue).map((e, i) => {
+      return { x: i, y: e.costValue };
+    })
+  );
   console.log(stats);
 
   return (
@@ -34,7 +39,9 @@ const RandomSearchSchwefel: React.SFC = () => {
         <Header as="h4">Median: {stats.median.toFixed(10)}</Header>
       </Row>
       <Row>
-        <Header as="h4">Standard deviation: {stats.standardDeviation.toFixed(10)}</Header>
+        <Header as="h4">
+          Standard deviation: {stats.standardDeviation.toFixed(10)}
+        </Header>
       </Row>
       <Row>
         <Col lg={6}>
@@ -49,27 +56,24 @@ const RandomSearchSchwefel: React.SFC = () => {
             </Table.Header>
 
             <Table.Body>
-              {
-                stats
-                  .winners
-                  .map(x => {
-                    return (
-                      <Table.Row
-                        positive={x.winningInput.costValue === stats.min}
-                        negative={x.winningInput.costValue === stats.max}
-                        key={x.roundID}
-                      >
-                        <Table.Cell>{x.roundID}</Table.Cell>
-                        <Table.Cell>{x.winningInput.xi.toFixed(10)}</Table.Cell>
-                        <Table.Cell>{x.winningInput.iterations}</Table.Cell>
-                        <Table.Cell>{x.winningInput.costValue.toFixed(10)}</Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
-
+              {stats.winners.map(x => {
+                return (
+                  <Table.Row
+                    positive={x.winningInput.costValue === stats.min}
+                    negative={x.winningInput.costValue === stats.max}
+                    key={x.roundID}
+                  >
+                    <Table.Cell>{x.roundID}</Table.Cell>
+                    <Table.Cell>{x.winningInput.xi.toFixed(10)}</Table.Cell>
+                    <Table.Cell>{x.winningInput.iterations}</Table.Cell>
+                    <Table.Cell>
+                      {x.winningInput.costValue.toFixed(10)}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
             </Table.Body>
           </Table>
-
         </Col>
         <Col lg={6}>
           <Row>
@@ -79,8 +83,15 @@ const RandomSearchSchwefel: React.SFC = () => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number, x: number }) => `iteration:${d.x} y: ${d.y.toFixed(10)}`}
-                  labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
+                  labels={(d: { y: number; x: number }) => {
+                    return `iteration:${d.x} y: ${d.y.toFixed(10)}`;
+                  }}
+                  labelComponent={
+                    <VictoryTooltip
+                      cornerRadius={0}
+                      flyoutStyle={{ fill: "white" }}
+                    />
+                  }
                 />
               }
             >
@@ -105,8 +116,14 @@ const RandomSearchSchwefel: React.SFC = () => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number, x: number }) => `iteration:${d.x} average: ${d.y.toFixed(10)}`}
-                  labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
+                  labels={(d: { y: number; x: number }) =>
+                    `iteration:${d.x} average: ${d.y.toFixed(10)}`}
+                  labelComponent={
+                    <VictoryTooltip
+                      cornerRadius={0}
+                      flyoutStyle={{ fill: "white" }}
+                    />
+                  }
                 />
               }
             >
@@ -115,14 +132,14 @@ const RandomSearchSchwefel: React.SFC = () => {
                   data: { stroke: "#303F9F", strokeWidth: 2 },
                   parent: { border: "10px solid #000" }
                 }}
-                data={stats.convergence.map(x => { return { x: x.iteration, y: x.costValue }; })}
+                data={stats.convergence.map(x => {
+                  return { x: x.iteration, y: x.costValue };
+                })}
               />
             </VictoryChart>
           </Row>
         </Col>
-
       </Row>
-
     </>
   );
 };

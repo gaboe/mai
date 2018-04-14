@@ -28,6 +28,11 @@ const Layout: React.SFC<Props> = (props: Props) => (
                                 De Jong Second Function
                             </Link>
                         </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Link to="/random-search-schwefel" style={{ color: "black" }}>
+                                Schwefel Function
+                            </Link>
+                        </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </Container>

@@ -1,4 +1,4 @@
-import { randomInt, random, std } from "mathjs";
+import { randomInt, random, std, sin, sqrt } from "mathjs";
 import { append } from "ramda";
 type DejongInput = {
   id: number;
@@ -28,13 +28,13 @@ type DejongStat = {
   standardDeviation: number;
 };
 
-const evaluateFirstDejongFunction = (iterations: number, x: number) => {
+const evaluateFirstDejongFunction = (x: number, iterations: number) => {
   return Array.from({ length: iterations })
     .map(_ => Math.pow(x, 2))
     .reduce((a, b) => a + b);
 };
 
-const evaluateSecondDejongFunction = (iterations: number, x: number) => {
+const evaluateSecondDejongFunction = (x: number, iterations: number) => {
   const xiPlusOne = x === 2.048 ? 2.048 : x + 0.1;
 
   return Array.from({ length: iterations - 1 })
@@ -42,7 +42,16 @@ const evaluateSecondDejongFunction = (iterations: number, x: number) => {
     .reduce((a, b) => a + b);
 };
 
-const getDejongRoundWinner = (
+const evaluatedSchwefelFunction = (x: number) => {
+  const dimensions = 2;
+  const sum = Array.from({ length: dimensions })
+    .map(_ => x * sin(sqrt(x)))
+    .reduce((a, b) => a + b);
+  const cost = (418.9829 * dimensions) + sum;
+  return cost;
+};
+
+const getRound = (
   roundID: number,
   costFn: (iterations: number, value: number) => number,
   randMin: number,
@@ -53,7 +62,7 @@ const getDejongRoundWinner = (
     .map(e => {
       const iterations = randomInt(1, 10);
       const randomX = random(randMin, randMax);
-      const costValue = costFn(iterations, randomX);
+      const costValue = costFn(randomX, iterations);
       return { id: e, iterations: iterations, xi: randomX, costValue: costValue };
     });
 
@@ -70,17 +79,18 @@ const getDejongRoundWinner = (
     allInputs: accumulator,
     roundID,
   };
+  console.log(winner);
   return winner;
 };
 
-const getDejongRoundWinners = (
+const getRounds = (
   costFn: (iterations: number, value: number) => number,
   randMin: number,
   randMax: number) => {
   const winners: RoundWinner[] = Array
     .from({ length: 30 })
     .map((_, i) => i)
-    .map(e => getDejongRoundWinner(e, costFn, randMin, randMax));
+    .map(e => getRound(e, costFn, randMin, randMax));
 
   return winners;
 };
@@ -119,7 +129,7 @@ const getStats = (
   costFn: (iterations: number, value: number) => number,
   randMin: number,
   randMax: number) => {
-  const winners = getDejongRoundWinners(costFn, randMin, randMax);
+  const winners = getRounds(costFn, randMin, randMax);
   const costValues = [...winners.map(x => x.winningInput.costValue)];
   const min = Math.min(...costValues);
   const max = Math.max(...costValues);
@@ -139,4 +149,8 @@ const getSecondDejongStats = () => {
   return getStats(evaluateSecondDejongFunction, -2, 2);
 };
 
-export { getFirstDejongStats, getSecondDejongStats };
+const getSchwefelStats = () => {
+  return getStats(evaluatedSchwefelFunction, -500, 500);
+};
+
+export { getFirstDejongStats, getSecondDejongStats, getSchwefelStats };

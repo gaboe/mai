@@ -34,7 +34,7 @@ it("First dejong has right count of iterations", () => {
     stat.winners.sort(
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
-  ).toBeLessThan(0.02);
+  ).toBeLessThan(0.05);
 });
 
 it("Second dejong has right structure", () => {
@@ -68,5 +68,5 @@ it("Second dejong has right count of iterations", () => {
     stat.winners.sort(
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
-  ).toBeLessThan(0.02);
+  ).toBeLessThan(0.05);
 });

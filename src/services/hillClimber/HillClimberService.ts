@@ -22,7 +22,7 @@ const getRound = (
   getInitialPosition: () => number
 ) => {
   let initialPosition = costFn(getInitialPosition());
-  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 10).map(
+  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 100).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPoint(
         initialPosition.input[0],

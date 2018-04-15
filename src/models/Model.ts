@@ -1,4 +1,4 @@
-type DejongInput = {
+type RoundRecord = {
   id: number;
   iterations: number;
   inputs: number[];
@@ -6,9 +6,9 @@ type DejongInput = {
 };
 
 type RoundWinner = {
-  winningInput: DejongInput;
+  winningRecord: RoundRecord;
   roundID: number;
-  allInputs: DejongInput[];
+  allInputs: RoundRecord[];
 };
 
 type ConvergenceStat = {
@@ -35,4 +35,4 @@ type GeneratedValues = {
   iterations: number;
 };
 
-export { DejongInput, RoundWinner, ConvergenceStat, Stat, GeneratedValues };
+export { RoundRecord, RoundWinner, ConvergenceStat, Stat, GeneratedValues };

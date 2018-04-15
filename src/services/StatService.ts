@@ -7,7 +7,7 @@ const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getConvergenceStat = (rounds: RoundWinner[]) => {
   let convergence: ConvergenceStat[] = [];
-  for (let index = 0; index < ITERATIONS - 1; index++) {
+  for (let index = 0; index < rounds[0].allInputs.length - 1; index++) {
     const costsAtTime = rounds.map(x => x.allInputs[index].costValue);
     const c: ConvergenceStat = {
       iteration: index,
@@ -37,7 +37,7 @@ const getMedian = (values: number[]) => {
 
 const getStats = (getRounds: () => RoundWinner[]) => {
   const winners = getRounds();
-  const costValues = [...winners.map(x => x.winningInput.costValue)];
+  const costValues = [...winners.map(x => x.winningRecord.costValue)];
   const min = Math.min(...costValues);
   const max = Math.max(...costValues);
   const average = arrAvg(costValues);
@@ -56,4 +56,4 @@ const getStats = (getRounds: () => RoundWinner[]) => {
   return stat;
 };
 
-export { getStats };
+export { getStats, ITERATIONS };

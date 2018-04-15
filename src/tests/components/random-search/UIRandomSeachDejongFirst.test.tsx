@@ -30,7 +30,7 @@ const getTestData = () => {
     winners: [
       {
         roundID: 0,
-        winningInput: { costValue: 77, id: 1, iterations: 7, inputs: [71] },
+        winningRecord: { costValue: 77, id: 1, iterations: 7, inputs: [71] },
         allInputs: [
           { costValue: 66, id: 0, iterations: 5, inputs: [41] },
           { costValue: 77, id: 1, iterations: 7, inputs: [71] },
@@ -39,7 +39,7 @@ const getTestData = () => {
       },
       {
         roundID: 1,
-        winningInput: { costValue: 88, id: 3, iterations: 7, inputs: [51] },
+        winningRecord: { costValue: 88, id: 3, iterations: 7, inputs: [51] },
         allInputs: [
           { costValue: 66, id: 0, iterations: 5, inputs: [41] },
           { costValue: 77, id: 1, iterations: 7, inputs: [71] },

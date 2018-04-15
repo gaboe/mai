@@ -57,16 +57,16 @@ const RandomSearchSchwefel: React.SFC = () => {
               {stats.winners.map(x => {
                 return (
                   <Table.Row
-                    positive={x.winningInput.costValue === stats.min}
-                    negative={x.winningInput.costValue === stats.max}
+                    positive={x.winningRecord.costValue === stats.min}
+                    negative={x.winningRecord.costValue === stats.max}
                     key={x.roundID}
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
                     <Table.Cell>
-                      {x.winningInput.inputs[0].toFixed(10)}
+                      {x.winningRecord.inputs[0].toFixed(10)}
                     </Table.Cell>
                     <Table.Cell>
-                      {x.winningInput.costValue.toFixed(10)}
+                      {x.winningRecord.costValue.toFixed(10)}
                     </Table.Cell>
                   </Table.Row>
                 );

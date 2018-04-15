@@ -7,16 +7,15 @@ import {
 } from "./../Functions";
 
 import {
-  DejongInput,
+  RoundRecord,
   GeneratedValues,
   RoundWinner,
   Stat
 } from "./../../models/Model";
-import { getStats } from "../StatService";
-const ITERATIONS = 500;
+import { getStats, ITERATIONS } from "../StatService";
 
 const getRound = (roundID: number, costFn: () => GeneratedValues) => {
-  const inputs: DejongInput[] = Array.from({ length: ITERATIONS })
+  const inputs: RoundRecord[] = Array.from({ length: ITERATIONS })
     .map((_, i) => i)
     .map(e => {
       const costValue = costFn();
@@ -28,7 +27,7 @@ const getRound = (roundID: number, costFn: () => GeneratedValues) => {
       };
     });
 
-  let accumulator: DejongInput[] = [];
+  let accumulator: RoundRecord[] = [];
   inputs.forEach(element => {
     if (
       accumulator.length === 0 ||
@@ -40,7 +39,7 @@ const getRound = (roundID: number, costFn: () => GeneratedValues) => {
     }
   });
   const winner: RoundWinner = {
-    winningInput: accumulator[accumulator.length - 1],
+    winningRecord: accumulator[accumulator.length - 1],
     allInputs: accumulator,
     roundID
   };

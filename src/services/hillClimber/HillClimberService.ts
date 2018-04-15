@@ -3,7 +3,8 @@ import { GeneratedValues, RoundWinner, RoundRecord } from "../../models/Model";
 import { randomInt, random } from "mathjs";
 import {
   evaluateFirstDejongFunction,
-  evaluateSecondDejongFunction
+  evaluateSecondDejongFunction,
+  evaluatedSchwefelFunction
 } from "../Functions";
 import { getIndexedArray } from "../../utils/Utils";
 
@@ -99,4 +100,22 @@ const getSecondDejongStats = () => {
   );
 };
 
-export { getFirstDejongStats, getSecondDejongStats };
+const getSchwefelStats = () => {
+  return getStats(() =>
+    getRounds(
+      () => {
+        const x = random(-500, 500);
+        const o = evaluatedSchwefelFunction(x, 2);
+        const values: GeneratedValues = {
+          input: [x],
+          iterations: 2,
+          output: o
+        };
+        return values;
+      },
+      () => random(-2, 2)
+    )
+  );
+};
+
+export { getFirstDejongStats, getSecondDejongStats, getSchwefelStats };

@@ -1,6 +1,7 @@
 import {
   getFirstDejongStats,
-  getSecondDejongStats
+  getSecondDejongStats,
+  getSchwefelStats
 } from "../../services/hillClimber/HillClimberService";
 
 it("First dejong has right structure", () => {
@@ -69,4 +70,38 @@ it("Second dejong has right count of iterations", () => {
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
   ).toBeLessThan(0.05);
+});
+
+it("Schewel has right structure", () => {
+  const stat = getSchwefelStats();
+  expect(stat).toBeDefined();
+  expect(stat.winners.length).toEqual(30);
+  expect(stat.average).not.toBeNaN();
+  expect(stat.min).not.toBeNaN();
+  expect(stat.max).not.toBeNaN();
+  expect(stat.min).not.toBeNaN();
+  expect(stat.median).not.toBeNaN();
+  const inputs = stat.winners.map(x => x.allInputs);
+  inputs.forEach(x => {
+    expect(x.length).toEqual(50);
+    x.forEach(e => {
+      expect(e.costValue).not.toBeNaN();
+      expect(e.id).toBeGreaterThanOrEqual(0);
+      expect(e.inputs.length).toEqual(1);
+      e.inputs.forEach(i => {
+        expect(i).toBeGreaterThanOrEqual(-500);
+        expect(i).toBeLessThanOrEqual(500);
+      });
+    });
+  });
+});
+
+it("Schewel has right count of iterations", () => {
+  const stat = getSchwefelStats();
+  expect(stat).toBeDefined();
+  expect(
+    stat.winners.sort(
+      (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
+    )[0].winningRecord.costValue
+  ).toBeLessThan(0.00005);
 });

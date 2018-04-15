@@ -2,21 +2,24 @@ import { evaluatedSchwefelFunction } from "../../services/Functions";
 import { getSchwefelStats } from "../../services/randomSearch/RandomSearchService";
 
 it("is almost zero", () => {
-  const val = evaluatedSchwefelFunction(420.9687);
+  const val = evaluatedSchwefelFunction([420.9687, 420.9687]);
   expect(val).toBeLessThan(0.00003);
 });
 
 it("is not NaN", () => {
-  const val = evaluatedSchwefelFunction(-420.9687);
+  const val = evaluatedSchwefelFunction([-420.9687, -420.9687]);
   expect(val).not.toBeNaN();
 
-  const val2 = evaluatedSchwefelFunction(-324.5042901227688);
+  const val2 = evaluatedSchwefelFunction([
+    -324.5042901227688,
+    -324.5042901227688
+  ]);
   expect(val2).not.toBeNaN();
 
-  const val3 = evaluatedSchwefelFunction(0);
+  const val3 = evaluatedSchwefelFunction([0, 0]);
   expect(val3).not.toBeNaN();
 
-  const val4 = evaluatedSchwefelFunction(324);
+  const val4 = evaluatedSchwefelFunction([324, 324]);
   expect(val4).not.toBeNaN();
 });
 

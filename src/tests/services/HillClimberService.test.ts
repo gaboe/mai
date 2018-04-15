@@ -19,7 +19,7 @@ it("First dejong has right structure", () => {
     x.forEach(e => {
       expect(e.costValue).not.toBeNaN();
       expect(e.id).toBeGreaterThanOrEqual(0);
-      expect(e.inputs.length).toEqual(1);
+      expect(e.inputs.length).toEqual(2);
       e.inputs.forEach(i => {
         expect(i).toBeGreaterThanOrEqual(-5.12);
         expect(i).toBeLessThanOrEqual(5.12);
@@ -35,7 +35,7 @@ it("First dejong has right count of iterations", () => {
     stat.winners.sort(
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
-  ).toBeLessThan(0.5);
+  ).toBeLessThan(7);
 });
 
 it("Second dejong has right structure", () => {
@@ -53,7 +53,7 @@ it("Second dejong has right structure", () => {
     x.forEach(e => {
       expect(e.costValue).not.toBeNaN();
       expect(e.id).toBeGreaterThanOrEqual(0);
-      expect(e.inputs.length).toEqual(1);
+      expect(e.inputs.length).toEqual(2);
       e.inputs.forEach(i => {
         expect(i).toBeGreaterThanOrEqual(-2.048);
         expect(i).toBeLessThanOrEqual(2.048);
@@ -69,7 +69,7 @@ it("Second dejong has right count of iterations", () => {
     stat.winners.sort(
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
-  ).toBeLessThan(1);
+  ).toBeLessThan(7);
 });
 
 it("Schewel has right structure", () => {
@@ -87,7 +87,7 @@ it("Schewel has right structure", () => {
     x.forEach(e => {
       expect(e.costValue).not.toBeNaN();
       expect(e.id).toBeGreaterThanOrEqual(0);
-      expect(e.inputs.length).toEqual(1);
+      expect(e.inputs.length).toEqual(2);
       e.inputs.forEach(i => {
         expect(i).toBeGreaterThanOrEqual(-500);
         expect(i).toBeLessThanOrEqual(500);
@@ -103,5 +103,5 @@ it("Schewel has right count of iterations", () => {
     stat.winners.sort(
       (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
     )[0].winningRecord.costValue
-  ).toBeLessThan(0.005);
+  ).toBeLessThan(7);
 });

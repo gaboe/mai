@@ -13,6 +13,7 @@ import {
   Stat
 } from "./../../models/Model";
 import { getStats, ITERATIONS } from "../StatService";
+import { getIndexedArray } from "../../utils/Utils";
 
 const getRound = (roundID: number, costFn: () => GeneratedValues) => {
   const inputs: RoundRecord[] = Array.from({ length: ITERATIONS })
@@ -58,10 +59,10 @@ const getFirstDejongStats = () => {
   return getStats(() =>
     getRounds(() => {
       const iterations = randomInt(1, 10);
-      const x = random(-5, 5);
-      const o = evaluateFirstDejongFunction(x, iterations);
+      const x = getIndexedArray(2).map(_ => random(-5, 5));
+      const o = evaluateFirstDejongFunction(x);
       const values: GeneratedValues = {
-        input: [x],
+        input: x,
         iterations,
         output: o
       };
@@ -74,10 +75,10 @@ const getSecondDejongStats = () => {
   return getStats(() =>
     getRounds(() => {
       const iterations = randomInt(2, 10);
-      const x = random(-2, 2);
-      const o = evaluateSecondDejongFunction(x, iterations);
+      const x = getIndexedArray(2).map(_ => random(-2, 2));
+      const o = evaluateSecondDejongFunction(x);
       const values: GeneratedValues = {
-        input: [x],
+        input: x,
         iterations,
         output: o
       };
@@ -89,10 +90,10 @@ const getSecondDejongStats = () => {
 const getSchwefelStats = () => {
   return getStats(() =>
     getRounds(() => {
-      const x = random(-500, 500);
-      const o = evaluatedSchwefelFunction(x, 2);
+      const x = getIndexedArray(2).map(_ => random(-500, 500));
+      const o = evaluatedSchwefelFunction(x);
       const values: GeneratedValues = {
-        input: [x],
+        input: x,
         iterations: 2,
         output: o
       };

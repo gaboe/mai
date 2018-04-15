@@ -2,24 +2,24 @@ import { evaluateSecondDejongFunction } from "../../services/Functions";
 import { getSecondDejongStats } from "../../services/randomSearch/RandomSearchService";
 
 it("is almost zero", () => {
-  const val = evaluateSecondDejongFunction(1, 2);
+  const val = evaluateSecondDejongFunction([1, 1]);
   expect(val).toBeLessThan(0.00003);
 });
 
 it("is not NaN", () => {
-  const val = evaluateSecondDejongFunction(-2.048, 10);
+  const val = evaluateSecondDejongFunction([-2.048, -2.048]);
   expect(val).not.toBeNaN();
 
-  const val2 = evaluateSecondDejongFunction(-1.12, 10);
+  const val2 = evaluateSecondDejongFunction([-1.12, -1.12]);
   expect(val2).not.toBeNaN();
 
-  const val3 = evaluateSecondDejongFunction(0, 10);
+  const val3 = evaluateSecondDejongFunction([0, 0]);
   expect(val3).not.toBeNaN();
 
-  const val4 = evaluateSecondDejongFunction(1.12, 10);
+  const val4 = evaluateSecondDejongFunction([1.12, 1.12]);
   expect(val4).not.toBeNaN();
 
-  const val5 = evaluateSecondDejongFunction(2.048, 10);
+  const val5 = evaluateSecondDejongFunction([2.048, 2.048]);
   expect(val5).not.toBeNaN();
 });
 

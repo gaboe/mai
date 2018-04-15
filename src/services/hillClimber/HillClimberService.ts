@@ -10,22 +10,22 @@ import { getIndexedArray } from "../../utils/Utils";
 
 const CLOSE_DISTANCE = 0.005;
 
-const getValuesCloseToPoint = (x: number, count: number) => {
+const getValuesCloseToPoint = (input: number[], count: number) => {
   return getIndexedArray(count).map(_ =>
-    random(x - CLOSE_DISTANCE, x + CLOSE_DISTANCE)
+    input.map(x => random(x - CLOSE_DISTANCE, x + CLOSE_DISTANCE))
   );
 };
 
 const getRound = (
   roundID: number,
-  costFn: (x: number) => GeneratedValues,
-  getInitialPosition: () => number
+  costFn: (x: number[]) => GeneratedValues,
+  getInitialPosition: () => number[]
 ) => {
   let initialPosition = costFn(getInitialPosition());
   const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 100).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPoint(
-        initialPosition.input[0],
+        initialPosition.input,
         100
       ).map(x => costFn(x));
       if (
@@ -54,8 +54,8 @@ const getRound = (
 };
 
 const getRounds = (
-  costFn: (x: number) => GeneratedValues,
-  getInitialPosition: () => number
+  costFn: (x: number[]) => GeneratedValues,
+  getInitialPosition: () => number[]
 ) => {
   const winners: RoundWinner[] = Array.from({ length: 30 })
     .map((_, i) => i)
@@ -68,16 +68,15 @@ const getFirstDejongStats = () => {
   return getStats(() =>
     getRounds(
       x => {
-        const iterations = randomInt(1, 10);
-        const o = evaluateFirstDejongFunction(x, iterations);
+        const o = evaluateFirstDejongFunction(x);
         const values: GeneratedValues = {
-          input: [x],
-          iterations,
+          input: x,
+          iterations: x.length,
           output: o
         };
         return values;
       },
-      () => random(-5, 5)
+      () => getIndexedArray(2).map(_ => random(-5, 5))
     )
   );
 };
@@ -87,15 +86,15 @@ const getSecondDejongStats = () => {
     getRounds(
       x => {
         const iterations = randomInt(2, 10);
-        const o = evaluateSecondDejongFunction(x, iterations);
+        const o = evaluateSecondDejongFunction(x);
         const values: GeneratedValues = {
-          input: [x],
+          input: x,
           iterations,
           output: o
         };
         return values;
       },
-      () => random(-2, 2)
+      () => getIndexedArray(2).map(_ => random(-2, 2))
     )
   );
 };
@@ -104,16 +103,16 @@ const getSchwefelStats = () => {
   return getStats(() =>
     getRounds(
       () => {
-        const x = random(-500, 500);
-        const o = evaluatedSchwefelFunction(x, 2);
+        const x = getIndexedArray(2).map(_ => random(-500, 500));
+        const o = evaluatedSchwefelFunction(x);
         const values: GeneratedValues = {
-          input: [x],
+          input: x,
           iterations: 2,
           output: o
         };
         return values;
       },
-      () => random(-2, 2)
+      () => getIndexedArray(2).map(_ => random(-500, 500))
     )
   );
 };

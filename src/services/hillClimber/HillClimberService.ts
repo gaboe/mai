@@ -1,10 +1,13 @@
 import { getStats, ITERATIONS } from "../StatService";
 import { GeneratedValues, RoundWinner, RoundRecord } from "../../models/Model";
 import { randomInt, random } from "mathjs";
-import { evaluateFirstDejongFunction } from "../Functions";
+import {
+  evaluateFirstDejongFunction,
+  evaluateSecondDejongFunction
+} from "../Functions";
 import { getIndexedArray } from "../../utils/Utils";
 
-const CLOSE_DISTANCE = 0.5;
+const CLOSE_DISTANCE = 0.005;
 
 const getValuesCloseToPoint = (x: number, count: number) => {
   return getIndexedArray(count).map(_ =>
@@ -18,19 +21,20 @@ const getRound = (
   getInitialPosition: () => number
 ) => {
   let initialPosition = costFn(getInitialPosition());
-  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 100).map(
+  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 10).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPoint(
         initialPosition.input[0],
-        5
+        100
       ).map(x => costFn(x));
       if (
         closeDistanceValues.filter(c => c.output < initialPosition.output)
           .length > 0
       ) {
-        initialPosition = closeDistanceValues.sort(
-          (a, b) => a.output - b.output
-        )[0];
+        const lower = closeDistanceValues
+          .filter(c => c.output < initialPosition.output)
+          .sort((a, b) => a.output - b.output);
+        initialPosition = lower[0];
       }
       return {
         id: iterationInRoundID,
@@ -40,9 +44,8 @@ const getRound = (
       };
     }
   );
-
   const winner: RoundWinner = {
-    winningRecord: inputs[0],
+    winningRecord: inputs[inputs.length - 1],
     allInputs: inputs,
     roundID
   };
@@ -78,4 +81,22 @@ const getFirstDejongStats = () => {
   );
 };
 
-export { getFirstDejongStats };
+const getSecondDejongStats = () => {
+  return getStats(() =>
+    getRounds(
+      x => {
+        const iterations = randomInt(2, 10);
+        const o = evaluateSecondDejongFunction(x, iterations);
+        const values: GeneratedValues = {
+          input: [x],
+          iterations,
+          output: o
+        };
+        return values;
+      },
+      () => random(-2, 2)
+    )
+  );
+};
+
+export { getFirstDejongStats, getSecondDejongStats };

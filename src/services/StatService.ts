@@ -2,7 +2,7 @@ import { Stat, ConvergenceStat, RoundWinner } from "src/models/Model";
 import { std } from "mathjs";
 import { append } from "ramda";
 
-const ITERATIONS = 500;
+const ITERATIONS = 1000;
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getConvergenceStat = (rounds: RoundWinner[]) => {

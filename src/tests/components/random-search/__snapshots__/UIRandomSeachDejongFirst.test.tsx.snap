@@ -279,7 +279,23 @@ Array [
             <th
               className=""
             >
-              x
+              \`x$
+              0
+              \`
+            </th>
+            <th
+              className=""
+            >
+              \`x$
+              1
+              \`
+            </th>
+            <th
+              className=""
+            >
+              \`x$
+              2
+              \`
             </th>
             <th
               className=""
@@ -2567,12 +2583,23 @@ Array [
             <th
               className=""
             >
-              x
+              \`x$
+              0
+              \`
             </th>
             <th
               className=""
             >
-              i
+              \`x$
+              1
+              \`
+            </th>
+            <th
+              className=""
+            >
+              \`x$
+              2
+              \`
             </th>
             <th
               className=""

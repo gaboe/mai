@@ -48,7 +48,9 @@ const RandomSearchSchwefel: React.SFC = () => {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Round</Table.HeaderCell>
-                <Table.HeaderCell>x</Table.HeaderCell>
+                {stats.winners[0].winningRecord.inputs.map((_, i) => (
+                  <Table.HeaderCell key={i}>{`x${i}`}</Table.HeaderCell>
+                ))}
                 <Table.HeaderCell>Cost value</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -62,9 +64,9 @@ const RandomSearchSchwefel: React.SFC = () => {
                     key={x.roundID}
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
-                    <Table.Cell>
-                      {x.winningRecord.inputs[0].toFixed(10)}
-                    </Table.Cell>
+                    {x.winningRecord.inputs.map(i => (
+                      <Table.Cell>{i.toFixed(10)}</Table.Cell>
+                    ))}
                     <Table.Cell>
                       {x.winningRecord.costValue.toFixed(10)}
                     </Table.Cell>

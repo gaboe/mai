@@ -1,4 +1,4 @@
-import { randomInt, random } from "mathjs";
+import { random } from "mathjs";
 import { append } from "ramda";
 import {
   evaluateFirstDejongFunction,
@@ -58,12 +58,11 @@ const getRounds = (costFn: () => GeneratedValues) => {
 const getFirstDejongStats = () => {
   return getStats(() =>
     getRounds(() => {
-      const iterations = randomInt(1, 10);
       const x = getIndexedArray(2).map(_ => random(-5, 5));
       const o = evaluateFirstDejongFunction(x);
       const values: GeneratedValues = {
         input: x,
-        iterations,
+        iterations: x.length,
         output: o
       };
       return values;
@@ -74,12 +73,11 @@ const getFirstDejongStats = () => {
 const getSecondDejongStats = () => {
   return getStats(() =>
     getRounds(() => {
-      const iterations = randomInt(2, 10);
       const x = getIndexedArray(2).map(_ => random(-2, 2));
       const o = evaluateSecondDejongFunction(x);
       const values: GeneratedValues = {
         input: x,
-        iterations,
+        iterations: x.length,
         output: o
       };
       return values;
@@ -94,7 +92,7 @@ const getSchwefelStats = () => {
       const o = evaluatedSchwefelFunction(x);
       const values: GeneratedValues = {
         input: x,
-        iterations: 2,
+        iterations: x.length,
         output: o
       };
       return values;

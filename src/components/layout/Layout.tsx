@@ -7,16 +7,13 @@ const Layout: React.SFC<Props> = (props: Props) => (
   <div>
     <Menu fixed="top" inverted={true}>
       <Container>
-        <Menu.Item as="a" header={true}>
-          MAI
-        </Menu.Item>
-        <Menu.Item>
-          <Link to="/">Random Search</Link>
-        </Menu.Item>
+        <Link to="/">
+          <Menu.Item header={true}>MAI</Menu.Item>
+        </Link>
         <Dropdown item={true} simple={true} text="Random Search">
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Link to="/" style={{ color: "black" }}>
+              <Link to="/random-search-dejong-first" style={{ color: "black" }}>
                 De Jong First Function
               </Link>
             </Dropdown.Item>

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Home Page 1`] = `
+<div
+  className="ui text container"
+>
+  <h1
+    className="ui header"
+    style={
+      Object {
+        "fontSize": "4em",
+        "fontWeight": "normal",
+        "marginBottom": 0,
+        "marginTop": "3em",
+      }
+    }
+  >
+    Made with
+    <i
+      aria-hidden="true"
+      className="heart icon"
+    />
+  </h1>
+  <h2
+    className="ui header"
+    style={
+      Object {
+        "fontSize": "1.7em",
+        "fontWeight": "normal",
+        "marginTop": "1.5em",
+      }
+    }
+  >
+    By Gabo Ečegi
+  </h2>
+  <a
+    href="#/random-search-dejong-first"
+    onClick={[Function]}
+  >
+    <button
+      className="ui huge primary button"
+      disabled={undefined}
+      onClick={[Function]}
+      role="button"
+      tabIndex={undefined}
+    >
+      Start with Random Search
+      <i
+        aria-hidden="true"
+        className="arrow right icon"
+      />
+    </button>
+  </a>
+</div>
+`;

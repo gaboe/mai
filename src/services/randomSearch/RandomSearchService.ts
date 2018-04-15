@@ -42,8 +42,10 @@ type GeneratedValues = {
   iterations: number;
 };
 
+const ITERATIONS = 500;
+
 const getRound = (roundID: number, costFn: () => GeneratedValues) => {
-  const inputs: DejongInput[] = Array.from({ length: 1000 })
+  const inputs: DejongInput[] = Array.from({ length: ITERATIONS })
     .map((_, i) => i)
     .map(e => {
       const costValue = costFn();
@@ -86,7 +88,7 @@ const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getConvergenceStat = (rounds: RoundWinner[]) => {
   let convergence: ConvergenceStat[] = [];
-  for (let index = 0; index < 999; index++) {
+  for (let index = 0; index < ITERATIONS - 1; index++) {
     const costsAtTime = rounds.map(x => x.allInputs[index].costValue);
     const c: ConvergenceStat = {
       iteration: index,

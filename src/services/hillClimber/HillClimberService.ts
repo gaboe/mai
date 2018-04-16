@@ -8,7 +8,7 @@ import {
 } from "../Functions";
 import { getIndexedArray } from "../../utils/Utils";
 
-const CLOSE_DISTANCE = 0.005;
+const CLOSE_DISTANCE = 1.5;
 
 const getValuesCloseToPoint = (input: number[], count: number) => {
   return getIndexedArray(count).map(_ =>

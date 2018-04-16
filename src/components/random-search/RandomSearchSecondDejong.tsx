@@ -65,7 +65,7 @@ const RandomSearchSecondDejong: React.SFC = () => {
                   >
                     <Table.Cell>{x.roundID}</Table.Cell>
                     {x.winningRecord.inputs.map(i => (
-                      <Table.Cell>{i.toFixed(10)}</Table.Cell>
+                      <Table.Cell key={i}>{i.toFixed(10)}</Table.Cell>
                     ))}
                     <Table.Cell>{x.winningRecord.iterations}</Table.Cell>
                     <Table.Cell>

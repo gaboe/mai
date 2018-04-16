@@ -1,6 +1,6 @@
 import { getStats, ITERATIONS } from "../StatService";
 import { GeneratedValues, RoundWinner, RoundRecord } from "../../models/Model";
-import { randomInt, random } from "mathjs";
+import { randomInt, random, abs } from "mathjs";
 import {
   evaluateFirstDejongFunction,
   evaluateSecondDejongFunction,
@@ -11,19 +11,21 @@ import { getIndexedArray } from "../../utils/Utils";
 type QuadraticBoundaryCoordinate = { max: number; min: number };
 type QBC = QuadraticBoundaryCoordinate;
 
-const CLOSE_DISTANCE = 1.5;
+const getRelativeDistance = ({ min, max }: QBC) => {
+  const sizeOfSearchedArea = (abs(min) + abs(max)) / 2;
+  return sizeOfSearchedArea * 0.1;
+};
 
 const getValuesCloseToPoint = (
   input: number[],
   count: number,
   boundary: QBC
 ) => {
+  const distance = getRelativeDistance(boundary);
   return getIndexedArray(count).map(_ =>
     input.map(x => {
-      const min =
-        x - CLOSE_DISTANCE < boundary.min ? boundary.min : x - CLOSE_DISTANCE;
-      const max =
-        x + CLOSE_DISTANCE > boundary.max ? boundary.max : x + CLOSE_DISTANCE;
+      const min = x - distance < boundary.min ? boundary.min : x - distance;
+      const max = x + distance > boundary.max ? boundary.max : x + distance;
       return random(min, max);
     })
   );
@@ -36,11 +38,11 @@ const getRound = (
   boundary: QBC
 ) => {
   let initialPosition = costFn(getInitialPosition());
-  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 100).map(
+  const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 10).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPoint(
         initialPosition.input,
-        100,
+        10,
         boundary
       ).map(x => costFn(x));
       if (

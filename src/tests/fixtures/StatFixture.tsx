@@ -1,3 +1,5 @@
+import { Stat } from "../../models/Model";
+
 const getTestData = () => {
   const response: Stat = {
     average: 666,

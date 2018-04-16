@@ -6,6 +6,7 @@ import { RandomSearchSchwefel } from "../random-search/RandomSearchSchwefel";
 import { Home } from "../home/Home";
 import { HillClimberFirstDejong } from "../hill-climber/HillClimberFirstDejong";
 import { HillClimberSecondDejong } from "../hill-climber/HillClimberSecondDejong";
+import { HillClimberSchwefel } from "../hill-climber/HillClimberSchwefel";
 
 const Routes = () => {
   return (
@@ -35,6 +36,11 @@ const Routes = () => {
         exact={true}
         path="/hill-climber-dejong-second"
         component={HillClimberSecondDejong}
+      />
+      <Route
+        exact={true}
+        path="/hill-climber-schwefel"
+        component={HillClimberSchwefel}
       />
     </>
   );

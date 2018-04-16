@@ -5,6 +5,7 @@ import { RandomSearchSecondDejong } from "../random-search/RandomSearchSecondDej
 import { RandomSearchSchwefel } from "../random-search/RandomSearchSchwefel";
 import { Home } from "../home/Home";
 import { HillClimberFirstDejong } from "../hill-climber/HillClimberFirstDejong";
+import { HillClimberSecondDejong } from "../hill-climber/HillClimberSecondDejong";
 
 const Routes = () => {
   return (
@@ -29,6 +30,11 @@ const Routes = () => {
         exact={true}
         path="/hill-climber-dejong-first"
         component={HillClimberFirstDejong}
+      />
+      <Route
+        exact={true}
+        path="/hill-climber-dejong-second"
+        component={HillClimberSecondDejong}
       />
     </>
   );

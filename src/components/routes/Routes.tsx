@@ -4,6 +4,7 @@ import { RandomSearchFirstDejong } from "../random-search/RandomSearchFirstDejon
 import { RandomSearchSecondDejong } from "../random-search/RandomSearchSecondDejong";
 import { RandomSearchSchwefel } from "../random-search/RandomSearchSchwefel";
 import { Home } from "../home/Home";
+import { HillClimberFirstDejong } from "../hill-climber/HillClimberFirstDejong";
 
 const Routes = () => {
   return (
@@ -23,6 +24,11 @@ const Routes = () => {
         exact={true}
         path="/random-search-schwefel"
         component={RandomSearchSchwefel}
+      />
+      <Route
+        exact={true}
+        path="/hill-climber-dejong-first"
+        component={HillClimberFirstDejong}
       />
     </>
   );

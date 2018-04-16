@@ -32,6 +32,25 @@ const Layout: React.SFC<Props> = (props: Props) => (
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+        <Dropdown item={true} simple={true} text="Hill Climber">
+          <Dropdown.Menu>
+            <Dropdown.Item>
+              <Link to="/hill-climber-dejong-first" style={{ color: "black" }}>
+                De Jong First Function
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/hill-climber-dejong-second" style={{ color: "black" }}>
+                De Jong Second Function
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/hill-climber-schwefel" style={{ color: "black" }}>
+                Schwefel Function
+              </Link>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Container>
     </Menu>
 

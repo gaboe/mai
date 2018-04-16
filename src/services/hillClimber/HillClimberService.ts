@@ -8,25 +8,40 @@ import {
 } from "../Functions";
 import { getIndexedArray } from "../../utils/Utils";
 
+type QuadraticBoundaryCoordinate = { max: number; min: number };
+type QBC = QuadraticBoundaryCoordinate;
+
 const CLOSE_DISTANCE = 1.5;
 
-const getValuesCloseToPoint = (input: number[], count: number) => {
+const getValuesCloseToPoint = (
+  input: number[],
+  count: number,
+  boundary: QBC
+) => {
   return getIndexedArray(count).map(_ =>
-    input.map(x => random(x - CLOSE_DISTANCE, x + CLOSE_DISTANCE))
+    input.map(x => {
+      const min =
+        x - CLOSE_DISTANCE < boundary.min ? boundary.min : x - CLOSE_DISTANCE;
+      const max =
+        x + CLOSE_DISTANCE > boundary.max ? boundary.max : x + CLOSE_DISTANCE;
+      return random(min, max);
+    })
   );
 };
 
 const getRound = (
   roundID: number,
   costFn: (x: number[]) => GeneratedValues,
-  getInitialPosition: () => number[]
+  getInitialPosition: () => number[],
+  boundary: QBC
 ) => {
   let initialPosition = costFn(getInitialPosition());
   const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 100).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPoint(
         initialPosition.input,
-        100
+        100,
+        boundary
       ).map(x => costFn(x));
       if (
         closeDistanceValues.filter(c => c.output < initialPosition.output)
@@ -55,11 +70,12 @@ const getRound = (
 
 const getRounds = (
   costFn: (x: number[]) => GeneratedValues,
-  getInitialPosition: () => number[]
+  getInitialPosition: () => number[],
+  boundary: QBC
 ) => {
   const winners: RoundWinner[] = Array.from({ length: 30 })
     .map((_, i) => i)
-    .map(e => getRound(e, costFn, getInitialPosition));
+    .map(e => getRound(e, costFn, getInitialPosition, boundary));
 
   return winners;
 };
@@ -76,7 +92,8 @@ const getFirstDejongStats = () => {
         };
         return values;
       },
-      () => getIndexedArray(2).map(_ => random(-5, 5))
+      () => getIndexedArray(2).map(_ => random(-5, 5)),
+      { min: -5, max: 5 }
     )
   );
 };
@@ -94,7 +111,8 @@ const getSecondDejongStats = () => {
         };
         return values;
       },
-      () => getIndexedArray(2).map(_ => random(-2, 2))
+      () => getIndexedArray(2).map(_ => random(-2, 2)),
+      { min: -2, max: 2 }
     )
   );
 };
@@ -112,7 +130,8 @@ const getSchwefelStats = () => {
         };
         return values;
       },
-      () => getIndexedArray(2).map(_ => random(-500, 500))
+      () => getIndexedArray(2).map(_ => random(-500, 500)),
+      { min: -500, max: 500 }
     )
   );
 };

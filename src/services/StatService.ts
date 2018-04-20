@@ -8,7 +8,6 @@ const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getConvergenceStat = (roundWinners: RoundWinner[]) => {
   let convergence: ConvergenceStat[] = [];
-  console.log("lengths", roundWinners.map(x => x.allInputs.length));
   for (let index = 0; index < roundWinners[0].allInputs.length - 1; index++) {
     const costsAtTime = roundWinners.map(x => x.allInputs[index].costValue);
     const c: ConvergenceStat = {

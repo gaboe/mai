@@ -7,6 +7,7 @@ import { Home } from "../home/Home";
 import { HillClimberFirstDejong } from "../hill-climber/HillClimberFirstDejong";
 import { HillClimberSecondDejong } from "../hill-climber/HillClimberSecondDejong";
 import { HillClimberSchwefel } from "../hill-climber/HillClimberSchwefel";
+import { SimulatedAnnealingFirstDejong } from "../simulated-annealing/SimulatedAnnealingFirstDejong";
 
 const Routes = () => {
   return (
@@ -41,6 +42,12 @@ const Routes = () => {
         exact={true}
         path="/hill-climber-schwefel"
         component={HillClimberSchwefel}
+      />
+
+      <Route
+        exact={true}
+        path="/sa-dejong-first"
+        component={SimulatedAnnealingFirstDejong}
       />
     </>
   );

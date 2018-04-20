@@ -5,7 +5,7 @@ import {
   RoundRecord,
   QBC
 } from "../../models/Model";
-import { randomInt, random, abs } from "mathjs";
+import { randomInt, random } from "mathjs";
 import {
   evaluateFirstDejongFunction,
   evaluateSecondDejongFunction,

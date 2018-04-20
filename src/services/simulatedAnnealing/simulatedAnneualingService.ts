@@ -46,15 +46,11 @@ const getRound = (
 ) => {
   let currentRecord = getInitialRecord(costFn, getInitialPosition);
   let records: Array<RoundRecord> = [currentRecord];
-
+  // console.log(currentRecord);
   let temperature = MAX_TEMP;
   let i = 1;
   while (temperature > MIN_TEMP) {
-    const nextPoint = getValuesCloseToPoint(
-      [currentRecord.inputs[0]],
-      1,
-      boundary
-    );
+    const nextPoint = getValuesCloseToPoint(currentRecord.inputs, 1, boundary);
     const nextValue = costFn(nextPoint[0]);
     const nextRecord: RoundRecord = {
       id: i,
@@ -73,7 +69,7 @@ const getRound = (
       );
       if (rand < probability) {
         records = append(nextRecord, records);
-        // console.log("next2", currentRecord.costValue, nextRecord.costValue);
+        console.log("next2", currentRecord, nextRecord);
         currentRecord = nextRecord;
       }
     }
@@ -97,7 +93,7 @@ const getRounds = (
   getInitialPosition: () => number[],
   boundary: QBC
 ) => {
-  const winners: RoundWinner[] = Array.from({ length: 30 })
+  const winners: RoundWinner[] = Array.from({ length: 20 })
     .map((_, i) => i)
     .map(e => getRound(e, costFn, getInitialPosition, boundary));
 

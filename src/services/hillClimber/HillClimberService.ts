@@ -1,5 +1,10 @@
-import { getStats, ITERATIONS } from "../StatService";
-import { GeneratedValues, RoundWinner, RoundRecord } from "../../models/Model";
+import { getStats, ITERATIONS, getValuesCloseToPoint } from "../StatService";
+import {
+  GeneratedValues,
+  RoundWinner,
+  RoundRecord,
+  QBC
+} from "../../models/Model";
 import { randomInt, random, abs } from "mathjs";
 import {
   evaluateFirstDejongFunction,
@@ -7,29 +12,6 @@ import {
   evaluatedSchwefelFunction
 } from "../Functions";
 import { getIndexedArray } from "../../utils/Utils";
-
-type QuadraticBoundaryCoordinate = { max: number; min: number };
-type QBC = QuadraticBoundaryCoordinate;
-
-const getRelativeDistance = ({ min, max }: QBC) => {
-  const sizeOfSearchedArea = (abs(min) + abs(max)) / 2;
-  return sizeOfSearchedArea * 0.1;
-};
-
-const getValuesCloseToPoint = (
-  input: number[],
-  count: number,
-  boundary: QBC
-) => {
-  const distance = getRelativeDistance(boundary);
-  return getIndexedArray(count).map(_ =>
-    input.map(x => {
-      const min = x - distance < boundary.min ? boundary.min : x - distance;
-      const max = x + distance > boundary.max ? boundary.max : x + distance;
-      return random(min, max);
-    })
-  );
-};
 
 const getRound = (
   roundID: number,

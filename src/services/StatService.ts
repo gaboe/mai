@@ -1,14 +1,16 @@
-import { Stat, ConvergenceStat, RoundWinner } from "src/models/Model";
-import { std } from "mathjs";
+import { Stat, ConvergenceStat, RoundWinner, QBC } from "src/models/Model";
+import { std, abs, random } from "mathjs";
 import { append } from "ramda";
+import { getIndexedArray } from "../utils/Utils";
 
 const ITERATIONS = 500;
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
-const getConvergenceStat = (rounds: RoundWinner[]) => {
+const getConvergenceStat = (roundWinners: RoundWinner[]) => {
   let convergence: ConvergenceStat[] = [];
-  for (let index = 0; index < rounds[0].allInputs.length - 1; index++) {
-    const costsAtTime = rounds.map(x => x.allInputs[index].costValue);
+  console.log("lengths", roundWinners.map(x => x.allInputs.length));
+  for (let index = 0; index < roundWinners[0].allInputs.length - 1; index++) {
+    const costsAtTime = roundWinners.map(x => x.allInputs[index].costValue);
     const c: ConvergenceStat = {
       iteration: index,
       costValue: arrAvg(costsAtTime)
@@ -56,4 +58,24 @@ const getStats = (getRounds: () => RoundWinner[]) => {
   return stat;
 };
 
-export { getStats, ITERATIONS };
+const getRelativeDistance = ({ min, max }: QBC) => {
+  const sizeOfSearchedArea = (abs(min) + abs(max)) / 2;
+  return sizeOfSearchedArea * 0.1;
+};
+
+const getValuesCloseToPoint = (
+  input: number[],
+  count: number,
+  boundary: QBC
+) => {
+  const distance = getRelativeDistance(boundary);
+  return getIndexedArray(count).map(_ =>
+    input.map(x => {
+      const min = x - distance < boundary.min ? boundary.min : x - distance;
+      const max = x + distance > boundary.max ? boundary.max : x + distance;
+      return random(min, max);
+    })
+  );
+};
+
+export { getStats, ITERATIONS, getValuesCloseToPoint };

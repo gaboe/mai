@@ -35,4 +35,14 @@ type GeneratedValues = {
   iterations: number;
 };
 
-export { RoundRecord, RoundWinner, ConvergenceStat, Stat, GeneratedValues };
+type QuadraticBoundaryCoordinate = { max: number; min: number };
+type QBC = QuadraticBoundaryCoordinate;
+
+export {
+  RoundRecord,
+  RoundWinner,
+  ConvergenceStat,
+  Stat,
+  GeneratedValues,
+  QBC
+};

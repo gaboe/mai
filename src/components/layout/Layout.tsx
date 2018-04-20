@@ -10,44 +10,66 @@ const Layout: React.SFC<Props> = (props: Props) => (
         <Link to="/">
           <Menu.Item header={true}>MAI</Menu.Item>
         </Link>
-        <Dropdown item={true} simple={true} text="Random Search">
+        <Dropdown
+          closeOnBlur={true}
+          closeOnChange={true}
+          item={true}
+          simple={true}
+          text="Random Search"
+        >
           <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/random-search-dejong-first" style={{ color: "black" }}>
-                De Jong First Function
-              </Link>
+            <Dropdown.Item
+              as={Link}
+              to="/random-search-dejong-first"
+              style={{ color: "black" }}
+            >
+              De Jong First Function
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link
-                to="/random-search-dejong-second"
-                style={{ color: "black" }}
-              >
-                De Jong Second Function
-              </Link>
+
+            <Dropdown.Item
+              as={Link}
+              to="/random-search-dejong-second"
+              style={{ color: "black" }}
+            >
+              De Jong Second Function
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/random-search-schwefel" style={{ color: "black" }}>
-                Schwefel Function
-              </Link>
+            <Dropdown.Item
+              as={Link}
+              to="/random-search-schwefel"
+              style={{ color: "black" }}
+            >
+              Schwefel Function
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Dropdown item={true} simple={true} text="Hill Climber">
+        <Dropdown
+          closeOnBlur={true}
+          closeOnChange={true}
+          item={true}
+          simple={true}
+          text="Hill Climber"
+        >
           <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/hill-climber-dejong-first" style={{ color: "black" }}>
-                De Jong First Function
-              </Link>
+            <Dropdown.Item
+              as={Link}
+              to="/hill-climber-dejong-first"
+              style={{ color: "black" }}
+            >
+              De Jong First Function
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/hill-climber-dejong-second" style={{ color: "black" }}>
-                De Jong Second Function
-              </Link>
+            <Dropdown.Item
+              as={Link}
+              to="/hill-climber-dejong-second"
+              style={{ color: "black" }}
+            >
+              De Jong Second Function
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/hill-climber-schwefel" style={{ color: "black" }}>
-                Schwefel Function
-              </Link>
+            <Dropdown.Item
+              as={Link}
+              to="/hill-climber-schwefel"
+              style={{ color: "black" }}
+            >
+              Schwefel Function
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

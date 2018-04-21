@@ -5,9 +5,13 @@ import {
   RoundWinner,
   RoundRecord
 } from "../../models/Model";
-import { evaluateFirstDejongFunction } from "../Functions";
+import {
+  evaluateFirstDejongFunction,
+  evaluateSecondDejongFunction,
+  evaluatedSchwefelFunction
+} from "../Functions";
 import { getIndexedArray, revertSum, gaussianRand } from "../../utils/Utils";
-import { random } from "mathjs";
+import { random, randomInt } from "mathjs";
 
 const MAX_TEMP = 10000;
 const MIN_TEMP = 1000;
@@ -116,4 +120,46 @@ const getFirstDejongStats = () => {
   );
 };
 
-export { getRound, getFirstDejongStats };
+const getSecondDejongStats = () => {
+  return getStats(() =>
+    getRounds(
+      x => {
+        const iterations = randomInt(2, 10);
+        const o = evaluateSecondDejongFunction(x);
+        const values: GeneratedValues = {
+          input: x,
+          iterations,
+          output: o
+        };
+        return values;
+      },
+      () => getIndexedArray(2).map(_ => random(-2, 2)),
+      { min: -2, max: 2 }
+    )
+  );
+};
+
+const getSchwefelStats = () => {
+  return getStats(() =>
+    getRounds(
+      () => {
+        const x = getIndexedArray(2).map(_ => random(-500, 500));
+        const o = evaluatedSchwefelFunction(x);
+        const values: GeneratedValues = {
+          input: x,
+          iterations: 2,
+          output: o
+        };
+        return values;
+      },
+      () => getIndexedArray(2).map(_ => random(-500, 500)),
+      { min: -500, max: 500 }
+    )
+  );
+};
+export {
+  getRound,
+  getFirstDejongStats,
+  getSecondDejongStats,
+  getSchwefelStats
+};

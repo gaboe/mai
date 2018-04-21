@@ -6,23 +6,12 @@ import {
   RoundRecord
 } from "../../models/Model";
 import { evaluateFirstDejongFunction } from "../Functions";
-import { getIndexedArray } from "../../utils/Utils";
+import { getIndexedArray, revertSum, gaussianRand } from "../../utils/Utils";
 import { random } from "mathjs";
-import { append } from "ramda";
 
 const MAX_TEMP = 10000;
 const MIN_TEMP = 1000;
 const COOLING = 0.98;
-
-const gaussianRand = () => {
-  var rand = 0;
-
-  for (var i = 0; i < 6; i += 1) {
-    rand += Math.random();
-  }
-
-  return rand / 6;
-};
 
 const getInitialRecord = (
   costFn: (x: number[]) => GeneratedValues,
@@ -45,64 +34,57 @@ const getRound = (
   boundary: QBC
 ) => {
   let currentRecord = getInitialRecord(costFn, getInitialPosition);
-  let records: Array<RoundRecord> = [currentRecord];
+
   let temperature = MAX_TEMP;
-  let i = 1;
 
-  const perIteration = ITERATIONS / 115;
-  let accumulator = 0;
-  const arr = [];
-  for (let index = 0; index < 115; index++) {
-    let toAdd = 0;
-    if (accumulator > 1) {
-      const takenFromAccumulator = Math.ceil(perIteration) - perIteration;
-      toAdd = takenFromAccumulator + perIteration;
-      accumulator -= takenFromAccumulator;
-    } else if (index === 114) {
-      toAdd = Math.round(perIteration) + Math.ceil(accumulator);
-    } else {
-      toAdd = perIteration;
-    }
-    const delta = toAdd - Math.floor(toAdd);
-    accumulator += delta;
-    arr.push(Math.floor(toAdd));
-    console.log(toAdd, accumulator);
-  }
-  console.log("array cisle", arr);
-  console.log("suma", arr.reduce((a, b) => a + b));
-
+  const temperatures: number[] = [];
   while (temperature > MIN_TEMP) {
-    const nextPoint = getValuesCloseToPoint(currentRecord.inputs, 1, boundary);
-    const nextValue = costFn(nextPoint[0]);
-    const nextRecord: RoundRecord = {
-      id: i,
-      inputs: nextValue.input,
-      costValue: nextValue.output,
-      iterations: nextValue.iterations
-    };
-    if (nextRecord.costValue < currentRecord.costValue) {
-      records = append(nextRecord, records);
-      currentRecord = nextRecord;
-    } else {
-      const rand = gaussianRand();
-      const probability = Math.exp(
-        -(nextRecord.costValue - currentRecord.costValue) / temperature
-      );
-      if (rand < probability) {
-        records = append(nextRecord, records);
-        currentRecord = nextRecord;
-      }
-    }
-
-    i++;
+    temperatures.push(temperature);
     temperature *= COOLING;
   }
-  const w: RoundWinner = {
+  const costFnSeeks = revertSum(ITERATIONS, temperatures.length);
+
+  const records = costFnSeeks.reduce<RoundRecord[]>(
+    (accumulator, seeks, index) => {
+      const nextValue = getValuesCloseToPoint(
+        accumulator[accumulator.length - 1].inputs,
+        seeks,
+        boundary
+      )
+        .map(x => costFn(x))
+        .sort((a, b) => a.output - b.output)[0];
+
+      const nextRecord: RoundRecord = {
+        id: index,
+        inputs: nextValue.input,
+        costValue: nextValue.output,
+        iterations: nextValue.iterations
+      };
+
+      if (
+        nextRecord.costValue < accumulator[accumulator.length - 1].costValue
+      ) {
+        accumulator.push(nextRecord);
+      } else {
+        const rand = gaussianRand();
+        const delta =
+          nextRecord.costValue - accumulator[accumulator.length - 1].costValue;
+        const probability = Math.exp(-delta / temperatures[index]);
+        if (rand < probability) {
+          accumulator.push(nextRecord);
+        }
+      }
+      return accumulator;
+    },
+    [currentRecord]
+  );
+
+  const winner: RoundWinner = {
     winningRecord: records[records.length - 1],
     allInputs: records,
     roundID: roundID
   };
-  return w;
+  return winner;
 };
 
 const getRounds = (
@@ -110,7 +92,7 @@ const getRounds = (
   getInitialPosition: () => number[],
   boundary: QBC
 ) => {
-  const winners: RoundWinner[] = Array.from({ length: 1 })
+  const winners: RoundWinner[] = Array.from({ length: 30 })
     .map((_, i) => i)
     .map(e => getRound(e, costFn, getInitialPosition, boundary));
   return winners;

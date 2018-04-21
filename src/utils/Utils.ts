@@ -24,4 +24,13 @@ const revertSum = (sum: number, arrayLength: number) => {
   return arr;
 };
 
-export { getIndexedArray, revertSum };
+const gaussianRand = () => {
+  var rand = 0;
+
+  for (var i = 0; i < 6; i += 1) {
+    rand += Math.random();
+  }
+
+  return rand / 6;
+};
+export { getIndexedArray, revertSum, gaussianRand };

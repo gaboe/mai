@@ -77,11 +77,8 @@ const getRound = (
     i++;
     temperature *= COOLING;
   }
-  // console.log(roundID, currentRecord.costValue);
-  // console.log(i);
-  const best = records.sort((a, b) => a.costValue - b.costValue)[0];
   const w: RoundWinner = {
-    winningRecord: best,
+    winningRecord: records[records.length - 1],
     allInputs: records,
     roundID: roundID
   };
@@ -93,10 +90,10 @@ const getRounds = (
   getInitialPosition: () => number[],
   boundary: QBC
 ) => {
-  const winners: RoundWinner[] = Array.from({ length: 20 })
+  const winners: RoundWinner[] = Array.from({ length: 30 })
     .map((_, i) => i)
     .map(e => getRound(e, costFn, getInitialPosition, boundary));
-
+  console.log(winners);
   return winners;
 };
 

@@ -1,4 +1,4 @@
-import { getStats, getValuesCloseToPoint } from "../StatService";
+import { getStats, getValuesCloseToPoint, ITERATIONS } from "../StatService";
 import {
   GeneratedValues,
   QBC,
@@ -46,9 +46,31 @@ const getRound = (
 ) => {
   let currentRecord = getInitialRecord(costFn, getInitialPosition);
   let records: Array<RoundRecord> = [currentRecord];
-  // console.log(currentRecord);
   let temperature = MAX_TEMP;
   let i = 1;
+
+  const perIteration = ITERATIONS / 115;
+  let accumulator = 0;
+  const arr = [];
+  for (let index = 0; index < 115; index++) {
+    let toAdd = 0;
+    if (accumulator > 1) {
+      const takenFromAccumulator = Math.ceil(perIteration) - perIteration;
+      toAdd = takenFromAccumulator + perIteration;
+      accumulator -= takenFromAccumulator;
+    } else if (index === 114) {
+      toAdd = Math.round(perIteration) + Math.ceil(accumulator);
+    } else {
+      toAdd = perIteration;
+    }
+    const delta = toAdd - Math.floor(toAdd);
+    accumulator += delta;
+    arr.push(Math.floor(toAdd));
+    console.log(toAdd, accumulator);
+  }
+  console.log("array cisle", arr);
+  console.log("suma", arr.reduce((a, b) => a + b));
+
   while (temperature > MIN_TEMP) {
     const nextPoint = getValuesCloseToPoint(currentRecord.inputs, 1, boundary);
     const nextValue = costFn(nextPoint[0]);
@@ -61,7 +83,6 @@ const getRound = (
     if (nextRecord.costValue < currentRecord.costValue) {
       records = append(nextRecord, records);
       currentRecord = nextRecord;
-      // console.log("next1", currentRecord.costValue, nextRecord.costValue);
     } else {
       const rand = gaussianRand();
       const probability = Math.exp(
@@ -69,7 +90,6 @@ const getRound = (
       );
       if (rand < probability) {
         records = append(nextRecord, records);
-        console.log("next2", currentRecord, nextRecord);
         currentRecord = nextRecord;
       }
     }
@@ -90,10 +110,9 @@ const getRounds = (
   getInitialPosition: () => number[],
   boundary: QBC
 ) => {
-  const winners: RoundWinner[] = Array.from({ length: 30 })
+  const winners: RoundWinner[] = Array.from({ length: 1 })
     .map((_, i) => i)
     .map(e => getRound(e, costFn, getInitialPosition, boundary));
-  console.log(winners);
   return winners;
 };
 

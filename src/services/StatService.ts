@@ -1,7 +1,8 @@
 import { Stat, ConvergenceStat, RoundWinner, QBC } from "src/models/Model";
-import { std, abs, random } from "mathjs";
+import { std, abs, random, round } from "mathjs";
 import { append } from "ramda";
 import { getIndexedArray } from "../utils/Utils";
+import {} from "fast.js";
 
 const ITERATIONS = 500;
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -66,13 +67,13 @@ const getRelativeDistance = ({ min, max }: QBC) => {
 };
 
 const getValuesCloseToPoint = (
-  input: number[],
+  dimensions: number[],
   count: number,
   boundary: QBC
 ) => {
   const distance = getRelativeDistance(boundary);
   return getIndexedArray(count).map(_ =>
-    input.map(x => {
+    dimensions.map(x => {
       const min = x - distance < boundary.min ? boundary.min : x - distance;
       const max = x + distance > boundary.max ? boundary.max : x + distance;
       return random(min, max);
@@ -80,4 +81,63 @@ const getValuesCloseToPoint = (
   );
 };
 
-export { getStats, ITERATIONS, getValuesCloseToPoint };
+const getCoordinate = (
+  dimensions: number[],
+  boundary: QBC,
+  list: number[][]
+): number[] => {
+  const distance = getRelativeDistance(boundary);
+  const randomCoordinate = dimensions.map(x => {
+    const min = x - distance < boundary.min ? boundary.min : x - distance;
+    const max = x + distance > boundary.max ? boundary.max : x + distance;
+    return random(min, max);
+  });
+
+  if (listContainsCoordinate(list, randomCoordinate)) {
+    // console.log("exists");
+    return getCoordinate(dimensions, boundary, list);
+  }
+  return randomCoordinate;
+};
+
+const listContainsCoordinate = (list: number[][], coordinate: number[]) => {
+  for (let index = 0; index < list.length; index++) {
+    const areEqual = areCoordinatesEqual(list[index], coordinate);
+    if (areEqual) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const getValuesCloseToPointWithTabuList = (
+  dimensions: number[],
+  count: number,
+  boundary: QBC,
+  list: number[][]
+) => {
+  return getIndexedArray(count).map(_ => {
+    const coordinate = getCoordinate(dimensions, boundary, list);
+    return coordinate;
+  });
+};
+
+const areCoordinatesEqual = (a: number[], b: number[]) => {
+  if (a.length !== b.length) {
+    return false;
+  }
+  for (let index = 0; index < a.length; index++) {
+    if (a[index].toFixed(3) === b[index].toFixed(3)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export {
+  getStats,
+  ITERATIONS,
+  getValuesCloseToPoint,
+  getValuesCloseToPointWithTabuList,
+  areCoordinatesEqual
+};

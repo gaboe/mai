@@ -38,11 +38,21 @@ type GeneratedValues = {
 type QuadraticBoundaryCoordinate = { max: number; min: number };
 type QBC = QuadraticBoundaryCoordinate;
 
+type TabuList = {
+  tabuItems: TabuItem[];
+};
+
+type TabuItem = {
+  input: number[];
+};
+
 export {
   RoundRecord,
   RoundWinner,
   ConvergenceStat,
   Stat,
   GeneratedValues,
-  QBC
+  QBC,
+  TabuList,
+  TabuItem
 };

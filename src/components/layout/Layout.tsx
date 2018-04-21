@@ -88,20 +88,20 @@ const Layout: React.SFC<Props> = (props: Props) => (
             >
               De Jong First Function
             </Dropdown.Item>
-            {/* <Dropdown.Item
+            <Dropdown.Item
               as={Link}
-              to="/hill-climber-dejong-second"
+              to="/sa-dejong-second"
               style={{ color: "black" }}
             >
               De Jong Second Function
             </Dropdown.Item>
             <Dropdown.Item
               as={Link}
-              to="/hill-climber-schwefel"
+              to="/sa-schwefel"
               style={{ color: "black" }}
             >
               Schwefel Function
-            </Dropdown.Item> */}
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Container>

@@ -23,3 +23,13 @@ it("First dejong has right structure for simulated annealing", () => {
     });
   });
 });
+
+it("Simulated annealing has good best value", () => {
+  const stat = getFirstDejongStats();
+  expect(stat).toBeDefined();
+  expect(
+    stat.winners.sort(
+      (a, b) => a.winningRecord.costValue - b.winningRecord.costValue
+    )[0].winningRecord.costValue
+  ).toBeLessThan(0.5);
+});

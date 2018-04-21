@@ -28,7 +28,7 @@ it("First dejong has right structure", () => {
   });
 });
 
-it("First dejong has right count of iterations", () => {
+it("Hill climber First dejong has good best value", () => {
   const stat = getFirstDejongStats();
   expect(stat).toBeDefined();
   expect(
@@ -62,7 +62,7 @@ it("Second dejong has right structure", () => {
   });
 });
 
-it("Second dejong has right count of iterations", () => {
+it("Hill climber Second dejong has good best value", () => {
   const stat = getSecondDejongStats();
   expect(stat).toBeDefined();
   expect(
@@ -96,7 +96,7 @@ it("Schewel has right structure", () => {
   });
 });
 
-it("Schewel has right count of iterations", () => {
+it("Hill climber Schewel has good best value", () => {
   const stat = getSchwefelStats();
   expect(stat).toBeDefined();
   expect(

@@ -1,10 +1,12 @@
 import { Stat, ConvergenceStat, RoundWinner, QBC } from "src/models/Model";
-import { std, abs, random, round } from "mathjs";
+import { std, abs, random } from "mathjs";
 import { append } from "ramda";
 import { getIndexedArray } from "../utils/Utils";
 import {} from "fast.js";
 
 const ITERATIONS = 500;
+const MAX_RECURSION = 10;
+
 const arrAvg = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 const getConvergenceStat = (roundWinners: RoundWinner[]) => {
@@ -81,23 +83,16 @@ const getValuesCloseToPoint = (
   );
 };
 
-const getCoordinate = (
-  dimensions: number[],
-  boundary: QBC,
-  list: number[][]
-): number[] => {
-  const distance = getRelativeDistance(boundary);
-  const randomCoordinate = dimensions.map(x => {
-    const min = x - distance < boundary.min ? boundary.min : x - distance;
-    const max = x + distance > boundary.max ? boundary.max : x + distance;
-    return random(min, max);
-  });
-
-  if (listContainsCoordinate(list, randomCoordinate)) {
-    // console.log("exists");
-    return getCoordinate(dimensions, boundary, list);
+const areCoordinatesEqual = (a: number[], b: number[]) => {
+  if (a.length !== b.length) {
+    return false;
   }
-  return randomCoordinate;
+  for (let index = 0; index < a.length; index++) {
+    if (a[index].toFixed(4) === b[index].toFixed(4)) {
+      return true;
+    }
+  }
+  return false;
 };
 
 const listContainsCoordinate = (list: number[][], coordinate: number[]) => {
@@ -110,6 +105,28 @@ const listContainsCoordinate = (list: number[][], coordinate: number[]) => {
   return false;
 };
 
+const getCoordinate = (
+  dimensions: number[],
+  boundary: QBC,
+  list: number[][],
+  recursionLevel: number
+): number[] => {
+  const distance = getRelativeDistance(boundary);
+  const randomCoordinate = dimensions.map(x => {
+    const min = x - distance < boundary.min ? boundary.min : x - distance;
+    const max = x + distance > boundary.max ? boundary.max : x + distance;
+    return random(min, max);
+  });
+
+  if (listContainsCoordinate(list, randomCoordinate)) {
+    // console.log("exists");
+    if (recursionLevel < MAX_RECURSION) {
+      return getCoordinate(dimensions, boundary, list, recursionLevel + 1);
+    }
+  }
+  return randomCoordinate;
+};
+
 const getValuesCloseToPointWithTabuList = (
   dimensions: number[],
   count: number,
@@ -117,21 +134,9 @@ const getValuesCloseToPointWithTabuList = (
   list: number[][]
 ) => {
   return getIndexedArray(count).map(_ => {
-    const coordinate = getCoordinate(dimensions, boundary, list);
+    const coordinate = getCoordinate(dimensions, boundary, list, 0);
     return coordinate;
   });
-};
-
-const areCoordinatesEqual = (a: number[], b: number[]) => {
-  if (a.length !== b.length) {
-    return false;
-  }
-  for (let index = 0; index < a.length; index++) {
-    if (a[index].toFixed(3) === b[index].toFixed(3)) {
-      return true;
-    }
-  }
-  return false;
 };
 
 export {

@@ -10,6 +10,9 @@ import { HillClimberSchwefel } from "../hill-climber/HillClimberSchwefel";
 import { SimulatedAnnealingFirstDejong } from "../simulated-annealing/SimulatedAnnealingFirstDejong";
 import { SimulatedAnnealingSecondDejong } from "../simulated-annealing/SimulatedAnnealingSecondDejong";
 import { SimulatedAnnealingSchwefel } from "../simulated-annealing/SimulatedAnnealingSchwefel";
+import { TabuFirstDejong } from "../tabu/TabuFirstDejong";
+import { TabuSchwefel } from "../tabu/TabuSchwefel";
+import { TabuSecondDejong } from "../tabu/TabuSecondDejong";
 
 const Routes = () => {
   return (
@@ -51,7 +54,6 @@ const Routes = () => {
         path="/sa-dejong-first"
         component={SimulatedAnnealingFirstDejong}
       />
-
       <Route
         exact={true}
         path="/sa-dejong-second"
@@ -62,6 +64,17 @@ const Routes = () => {
         path="/sa-schwefel"
         component={SimulatedAnnealingSchwefel}
       />
+      <Route
+        exact={true}
+        path="/tabu-dejong-first"
+        component={TabuFirstDejong}
+      />
+      <Route
+        exact={true}
+        path="/tabu-dejong-second"
+        component={TabuSecondDejong}
+      />
+      <Route exact={true} path="/tabu-schwefel" component={TabuSchwefel} />
     </>
   );
 };

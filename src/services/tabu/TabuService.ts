@@ -7,9 +7,7 @@ import {
   GeneratedValues,
   RoundWinner,
   RoundRecord,
-  QBC,
-  TabuList,
-  TabuItem
+  QBC
 } from "../../models/Model";
 import { randomInt, random } from "mathjs";
 import {
@@ -27,7 +25,7 @@ const getRound = (
   boundary: QBC
 ) => {
   let initialPosition = costFn(getInitialPosition());
-  const fifo = new Fifo<number[]>(1000);
+  const fifo = new Fifo<number[]>(100000);
   const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 10).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPointWithTabuList(

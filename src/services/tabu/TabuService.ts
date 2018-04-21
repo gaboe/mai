@@ -25,7 +25,7 @@ const getRound = (
   boundary: QBC
 ) => {
   let initialPosition = costFn(getInitialPosition());
-  const fifo = new Fifo<number[]>(100000);
+  const fifo = new Fifo<number[]>(50);
   const inputs: RoundRecord[] = getIndexedArray(ITERATIONS / 10).map(
     iterationInRoundID => {
       const closeDistanceValues = getValuesCloseToPointWithTabuList(
@@ -47,7 +47,7 @@ const getRound = (
       }
       return {
         id: iterationInRoundID,
-        iterations: initialPosition.iterations,
+        iterations: fifo.items.length,
         inputs: initialPosition.input,
         costValue: initialPosition.output
       };

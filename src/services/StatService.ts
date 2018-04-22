@@ -84,15 +84,12 @@ const getValuesCloseToPoint = (
 };
 
 const areCoordinatesEqual = (a: number[], b: number[]) => {
-  if (a.length !== b.length) {
-    return false;
-  }
-  const areEqual = a.reduce<boolean>((acc, x, index) => {
-    const q = x.toFixed(4) === b[index].toFixed(4);
-    return acc && q;
-    // tslint:disable-next-line:align
-  }, true);
-  return areEqual;
+  return a.length !== b.length
+    ? false
+    : a.reduce(
+        (acc, x, index) => acc && x.toFixed(4) === b[index].toFixed(4),
+        true
+      );
 };
 
 const listContainsCoordinate = (list: number[][], coordinate: number[]) => {

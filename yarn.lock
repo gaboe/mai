@@ -2120,10 +2120,6 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-decimal.js-light@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/decimal.js-light/-/decimal.js-light-2.3.1.tgz#2a31d60385c5c365b49ddedb223e41240c72955a"
-
 decimal.js@9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-9.0.1.tgz#1cc8b228177da7ab6498c1cc06eb130a290e6e1e"
@@ -5889,6 +5885,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-animations@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-animations/-/react-animations-1.0.0.tgz#d96222920dfeabec8984d9b2ef2c5a5aadb40f06"
 
 react-dev-utils@^5.0.1:
   version "5.0.1"

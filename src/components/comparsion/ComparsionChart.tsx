@@ -27,7 +27,9 @@ const ComparsionChart: React.SFC<Props> = (props: Props) => (
           return `${d.name}, value: ${d.y.toFixed(8)}`;
         }}
         labelComponent={
-          <VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />}
+          <VictoryTooltip cornerRadius={0} flyoutStyle={{ fill: "white" }} />
+          // tslint:disable-next-line:jsx-curly-spacing
+        }
       />
     }
   >

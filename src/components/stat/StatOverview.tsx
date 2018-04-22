@@ -5,7 +5,8 @@ import {
   VictoryChart,
   VictoryLine,
   VictoryTheme,
-  VictoryTooltip
+  VictoryTooltip,
+  VictoryLabel
 } from "victory";
 
 import { VictoryVoronoiContainer } from "victory-chart";
@@ -21,7 +22,7 @@ type Props = {
 const StatOverview: React.SFC<Props> = (props: Props) => {
   const graphData = props.stats.winners.map(x =>
     x.allInputs.sort((a, b) => b.costValue - a.costValue).map((e, i) => {
-      return { x: i, y: e.costValue };
+      return { x: i, y: e.costValue, roundNo: x.roundID };
     })
   );
 
@@ -92,11 +93,12 @@ const StatOverview: React.SFC<Props> = (props: Props) => {
                 <VictoryVoronoiContainer
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
-                  labels={(d: { y: number; x: number }) => {
-                    return `iteration:${d.x} y: ${d.y.toFixed(10)}`;
+                  labels={(d: { y: number; roundNo: number }) => {
+                    return `Round No.:${d.roundNo} y: ${d.y.toFixed(10)}`;
                   }}
                   labelComponent={
                     <VictoryTooltip
+                      renderInPortal={true}
                       cornerRadius={0}
                       flyoutStyle={{ fill: "white" }}
                     />
@@ -104,6 +106,13 @@ const StatOverview: React.SFC<Props> = (props: Props) => {
                 />
               }
             >
+              <VictoryLabel
+                text="All iterations"
+                x={200}
+                y={30}
+                textAnchor="middle"
+              />
+
               {graphData.map((x, i) => {
                 return (
                   <VictoryLine
@@ -126,7 +135,7 @@ const StatOverview: React.SFC<Props> = (props: Props) => {
                   style={{ width: "70%", height: "auto" }}
                   voronoiDimension="x"
                   labels={(d: { y: number; x: number }) => {
-                    return `iteration:${d.x} y: ${d.y.toFixed(10)}`;
+                    return `Iteration No.${d.x} y: ${d.y.toFixed(10)}`;
                   }}
                   labelComponent={
                     <VictoryTooltip
@@ -137,6 +146,12 @@ const StatOverview: React.SFC<Props> = (props: Props) => {
                 />
               }
             >
+              <VictoryLabel
+                text="Convergence"
+                x={200}
+                y={30}
+                textAnchor="middle"
+              />
               <VictoryLine
                 style={{
                   data: { stroke: "#303F9F", strokeWidth: 2 },

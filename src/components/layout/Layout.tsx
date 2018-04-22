@@ -135,6 +135,37 @@ const Layout: React.SFC<Props> = (props: Props) => (
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+        <Dropdown
+          closeOnBlur={true}
+          closeOnChange={true}
+          item={true}
+          simple={true}
+          text="Comparsion"
+        >
+          <Dropdown.Menu>
+            <Dropdown.Item
+              as={Link}
+              to="/comparsion-dejong-first"
+              style={{ color: "black" }}
+            >
+              De Jong First Function
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to="/comparsion-dejong-second"
+              style={{ color: "black" }}
+            >
+              De Jong Second Function
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to="/comparsion-schwefel"
+              style={{ color: "black" }}
+            >
+              Schwefel Function
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Container>
     </Menu>
 

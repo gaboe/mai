@@ -13,6 +13,7 @@ import { SimulatedAnnealingSchwefel } from "../simulated-annealing/SimulatedAnne
 import { TabuFirstDejong } from "../tabu/TabuFirstDejong";
 import { TabuSchwefel } from "../tabu/TabuSchwefel";
 import { TabuSecondDejong } from "../tabu/TabuSecondDejong";
+import { FirstDejongComparsion } from "../comparsion/FirstDejongComparsion";
 
 const Routes = () => {
   return (
@@ -75,6 +76,12 @@ const Routes = () => {
         component={TabuSecondDejong}
       />
       <Route exact={true} path="/tabu-schwefel" component={TabuSchwefel} />
+
+      <Route
+        exact={true}
+        path="/comparsion-dejong-first"
+        component={FirstDejongComparsion}
+      />
     </>
   );
 };

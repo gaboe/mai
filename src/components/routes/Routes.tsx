@@ -14,6 +14,8 @@ import { TabuFirstDejong } from "../tabu/TabuFirstDejong";
 import { TabuSchwefel } from "../tabu/TabuSchwefel";
 import { TabuSecondDejong } from "../tabu/TabuSecondDejong";
 import { FirstDejongComparsion } from "../comparsion/FirstDejongComparsion";
+import { SecondDejongComparsion } from "../comparsion/SecondDejongComparsion";
+import { SchwefelComparsion } from "../comparsion/SchwefelComparsion";
 
 const Routes = () => {
   return (
@@ -81,6 +83,17 @@ const Routes = () => {
         exact={true}
         path="/comparsion-dejong-first"
         component={FirstDejongComparsion}
+      />
+
+      <Route
+        exact={true}
+        path="/comparsion-dejong-second"
+        component={SecondDejongComparsion}
+      />
+      <Route
+        exact={true}
+        path="/comparsion-schwefel"
+        component={SchwefelComparsion}
       />
     </>
   );

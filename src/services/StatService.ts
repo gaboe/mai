@@ -87,12 +87,12 @@ const areCoordinatesEqual = (a: number[], b: number[]) => {
   if (a.length !== b.length) {
     return false;
   }
-  for (let index = 0; index < a.length; index++) {
-    if (a[index].toFixed(4) === b[index].toFixed(4)) {
-      return true;
-    }
-  }
-  return false;
+  const areEqual = a.reduce<boolean>((acc, x, index) => {
+    const q = x.toFixed(4) === b[index].toFixed(4);
+    return acc && q;
+    // tslint:disable-next-line:align
+  }, true);
+  return areEqual;
 };
 
 const listContainsCoordinate = (list: number[][], coordinate: number[]) => {

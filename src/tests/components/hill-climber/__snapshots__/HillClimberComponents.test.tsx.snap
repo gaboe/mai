@@ -18,6 +18,43 @@ Array [
     <h1
       className="ui header"
     >
+      Hill climber
+    </h1>
+    <div
+      style={
+        Object {
+          "clear": "both",
+          "display": "table",
+        }
+      }
+    >
+      <span
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+         
+      </span>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "alignItems": "normal",
+        "display": "flex",
+        "flexGrow": 0,
+        "flexShrink": 0,
+        "flexWrap": "wrap",
+        "marginLeft": "-15px",
+        "marginRight": "-15px",
+      }
+    }
+  >
+    <h1
+      className="ui header"
+    >
       Schwefel Function
     </h1>
     <div
@@ -2306,6 +2343,43 @@ Array [
     <h1
       className="ui header"
     >
+      Hill climber
+    </h1>
+    <div
+      style={
+        Object {
+          "clear": "both",
+          "display": "table",
+        }
+      }
+    >
+      <span
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+         
+      </span>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "alignItems": "normal",
+        "display": "flex",
+        "flexGrow": 0,
+        "flexShrink": 0,
+        "flexWrap": "wrap",
+        "marginLeft": "-15px",
+        "marginRight": "-15px",
+      }
+    }
+  >
+    <h1
+      className="ui header"
+    >
       De Jong First Function
     </h1>
     <div
@@ -4578,6 +4652,43 @@ Array [
 
 exports[`Render second dejong function 1`] = `
 Array [
+  <div
+    style={
+      Object {
+        "alignItems": "normal",
+        "display": "flex",
+        "flexGrow": 0,
+        "flexShrink": 0,
+        "flexWrap": "wrap",
+        "marginLeft": "-15px",
+        "marginRight": "-15px",
+      }
+    }
+  >
+    <h1
+      className="ui header"
+    >
+      Hill climber
+    </h1>
+    <div
+      style={
+        Object {
+          "clear": "both",
+          "display": "table",
+        }
+      }
+    >
+      <span
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+         
+      </span>
+    </div>
+  </div>,
   <div
     style={
       Object {

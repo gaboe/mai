@@ -6,6 +6,7 @@ const HillClimberFirstDejong: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Hill climber"
         functionName={"De Jong First Function"}
         stats={getFirstDejongStats()}
       />

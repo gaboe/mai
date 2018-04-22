@@ -6,6 +6,7 @@ const RandomSearchSchwefel: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Random search"
         functionName={"Schwefel Function"}
         stats={getSchwefelStats()}
       />

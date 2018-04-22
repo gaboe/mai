@@ -6,6 +6,7 @@ const HillClimberSchwefel: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Hill climber"
         functionName={"Schwefel Function"}
         stats={getSchwefelStats()}
       />

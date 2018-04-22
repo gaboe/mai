@@ -6,6 +6,7 @@ const SimulatedAnnealingSecondDejong: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Simulated annealing"
         functionName={"De Jong Second Function"}
         stats={getSecondDejongStats()}
       />

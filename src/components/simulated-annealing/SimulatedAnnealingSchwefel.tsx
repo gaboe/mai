@@ -6,6 +6,7 @@ const SimulatedAnnealingSchwefel: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Simulated annealing"
         functionName={"Schwefel Function"}
         stats={getSchwefelStats()}
       />

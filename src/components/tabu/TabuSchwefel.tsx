@@ -6,6 +6,7 @@ const TabuSchwefel: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Tabu search"
         functionName={"Schwefel Function"}
         stats={getSchwefelStats()}
       />

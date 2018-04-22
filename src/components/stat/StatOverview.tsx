@@ -14,6 +14,7 @@ import { Stat as StatType } from "../../models/Model";
 
 type Props = {
   functionName: string;
+  algorithmName: string;
   stats: StatType;
 };
 
@@ -26,6 +27,9 @@ const StatOverview: React.SFC<Props> = (props: Props) => {
 
   return (
     <>
+      <Row>
+        <Header as="h1">{props.algorithmName}</Header>
+      </Row>
       <Row>
         <Header as="h1">{props.functionName}</Header>
       </Row>

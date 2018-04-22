@@ -6,6 +6,7 @@ const TabuFirstDejong: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Tabu search"
         functionName={"De Jong First Function"}
         stats={getFirstDejongStats()}
       />

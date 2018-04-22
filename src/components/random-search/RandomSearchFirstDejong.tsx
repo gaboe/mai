@@ -6,6 +6,7 @@ const RandomSearchFirstDejong: React.SFC = () => {
   return (
     <>
       <StatOverview
+        algorithmName="Random search"
         functionName={"De Jong First Function"}
         stats={getFirstDejongStats()}
       />
